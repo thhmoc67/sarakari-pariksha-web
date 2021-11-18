@@ -16,5 +16,17 @@
     "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "extensions": [".js", ".ts", ".tsx", ".json"],
+        "alias": {
+          "components": "./src/components",
+          "pages": "src/pages/"
+        }
+      }
+    ]
+  ]
 }
