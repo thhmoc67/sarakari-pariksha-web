@@ -1,11 +1,27 @@
 import React from 'react'
+import type {NextPage} from 'next'
+import Head from 'next/head'
+import Layout from '../../components/Layout'
 
-function Syllabus() {
+interface Props {}
+
+const SyllabusPage: NextPage<Props> = () => {
   return (
-    <div>
-      syllabus
-    </div>
+    <>
+      <Head>
+        <title>Sarkari Pariksa</title>
+        <meta name="description" content="Sarkari Pariksa" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Layout>
+        <p>home page</p>
+      </Layout>
+    </>
   )
 }
 
-export default Syllabus
+SyllabusPage.getInitialProps = async ({req}: any) => {
+  return {}
+}
+
+export default SyllabusPage

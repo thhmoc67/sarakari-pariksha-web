@@ -30,8 +30,8 @@ export const menulist = [
     key: 'Syllabus',
   },
   {
-    label: 'Adimission',
-    route: '/adimission',
+    label: 'Admission',
+    route: '/admission',
     key: 'Adimission',
   },
   {

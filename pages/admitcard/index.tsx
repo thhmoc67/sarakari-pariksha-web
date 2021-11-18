@@ -1,11 +1,27 @@
 import React from 'react'
+import type {NextPage} from 'next'
+import Head from 'next/head'
+import Layout from '../../components/Layout'
 
-function AdmitCard() {
+interface Props {}
+
+const AdmitCardPage: NextPage<Props> = () => {
   return (
-    <div>
-      AdmitCard
-    </div>
+    <>
+      <Head>
+        <title>Sarkari Pariksa</title>
+        <meta name="description" content="Sarkari Pariksa" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Layout>
+        <p>home page</p>
+      </Layout>
+    </>
   )
 }
 
-export default AdmitCard
+AdmitCardPage.getInitialProps = async ({req}: any) => {
+  return {}
+}
+
+export default AdmitCardPage
