@@ -1,0 +1,10 @@
+.home-container {
+  .cards {
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .list-card-component {
+      margin: 12px 0px;
+    }
+  }
+}

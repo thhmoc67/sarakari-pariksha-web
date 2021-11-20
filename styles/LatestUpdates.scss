@@ -1,0 +1,46 @@
+.latest-updates-component {
+  .cards {
+    flex-wrap: wrap;
+  }
+  .card {
+    width: 25%;
+    padding: 4px;
+    font-size: 22px;
+    p {
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: rgb(255, 255, 255);
+      border-radius: 12px;
+    }
+  }
+
+  .color-0 {
+    background-color: #191A19;
+  }
+  .color-1 {
+    background-color: #1E5128;
+  }
+  .color-2 {
+    background-color: #4E9F3D;
+  }
+  .color-3 {
+    background-color: #150050;
+  }
+  .color-4 {
+    background-color: #5C527F;
+  }
+  .color-5 {
+    background-color: #950101;
+  }
+  .color-6 {
+    background-color: #FF4C29;
+  }
+  .color-7 {
+    background-color: #290001;
+  }
+  .color-8 {
+    background-color: red;
+  }
+}

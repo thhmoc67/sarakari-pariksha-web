@@ -4,10 +4,11 @@
   width: 100%;
   padding: 12px;
   text-align: center;
+  cursor: pointer;
 }
 
 .list:hover {
-  background-color: grey;
+  background-color: #eee;
 }
 
 .ul {
@@ -19,4 +20,11 @@
 .wrapper {
   max-width: 1024px;
   margin: auto;
+}
+
+.footer {
+  text-align: center;
+  padding: 24px;
+  border-top: 1px solid #aaaaaa;
+  margin-top: 32px;
 }

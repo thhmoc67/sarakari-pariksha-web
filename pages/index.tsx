@@ -1,9 +1,9 @@
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import Layout from '../components/Layout'
-import styles from '../styles/Home.module.css'
+import Home from '../containers/Home'
 
-const Home: NextPage = () => {
+const App: NextPage = () => {
   return (
     <>
       <Head>
@@ -12,10 +12,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <p>home page</p>
+        <Home />
       </Layout>
     </>
   )
 }
 
-export default Home
+export default App

@@ -1,0 +1,27 @@
+@import './variables.scss';
+
+.list-card-component {
+  width: 32%;
+  text-align: center;
+  border: 1px solid $primary;
+
+  h3 {
+    margin: 0;
+    padding: 8px;
+    background-color: $primary;
+    color: $white;
+  }
+
+  li {
+    margin: 12px;
+  }
+
+  a {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: right !important;
+    p {
+      padding: 0 24px 0 0;
+    }
+  }
+}
