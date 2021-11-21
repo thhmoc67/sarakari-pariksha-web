@@ -1,12 +1,12 @@
 import type {NextPage} from 'next'
 import React from 'react'
 
-const Admin: NextPage = () => {
+const PostEdit: NextPage = () => {
   return (
     <div>
-      <div>admin home</div>
+      <div>PostEdit</div>
     </div>
   )
 }
 
-export default Admin
+export default PostEdit
