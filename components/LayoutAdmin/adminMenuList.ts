@@ -5,9 +5,9 @@ export const adminMenulist = [
     key: 'home',
   },
   {
-    label: 'Home',
-    route: '/admin',
-    key: 'home',
+    label: 'Post',
+    route: '/admin/post',
+    key: 'post',
   },
   {
     label: 'Home',
