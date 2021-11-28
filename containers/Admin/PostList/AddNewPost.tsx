@@ -43,7 +43,9 @@ export default function BasicModal() {
           <TextField fullWidth label="Post Name" color="primary" />
           <br />
           <br />
-          <Button fullWidth variant="contained">Add</Button>
+          <Button fullWidth variant="contained">
+            Add
+          </Button>
         </Box>
       </Modal>
     </div>
