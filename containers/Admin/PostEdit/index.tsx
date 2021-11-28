@@ -12,20 +12,36 @@ const PostEdit: NextPage = () => {
   function updateForm(data: any, attr: string): void {
     setForm({...form, [attr]: data})
   }
+
+  const listDiffferentEntries = [
+    'important_dates',
+    'application_fee',
+    'age_limit',
+    'qualification',
+  ]
   return (
     <Grid container spacing={2}>
       <Grid item md={12} margin={2}>
         <CommonData />
-        <Card style={{padding: 12}}>
-          <AddData
-            data={form.application_fee}
-            title={'Application Fee'}
-            updateForm={(data: any) => updateForm(data, 'application_fee')}
-          />
+        {listDiffferentEntries.map(entryItem => (
+          <Card style={{padding: 12, marginBottom: 12}} key={entryItem}>
+            <AddData
+              data={form[entryItem]}
+              title={entryItem.split('_').join(' ').toUpperCase()}
+              updateForm={(data: any) => updateForm(data, entryItem)}
+            />
+            <AddList
+              data={form[entryItem + '_notes']}
+              title={'Notes'}
+              updateForm={(data: any) => updateForm(data, entryItem + '_notes')}
+            />
+          </Card>
+        ))}
+        <Card style={{padding: 12, marginBottom: 12}}>
           <AddList
-            data={form.application_fee_notes}
-            title={'Notes'}
-            updateForm={(data: any) => updateForm(data, 'application_fee_notes')}
+            data={form['payment_modes']}
+            title={'Payment Modes'}
+            updateForm={(data: any) => updateForm(data, 'payment_modes')}
           />
         </Card>
       </Grid>

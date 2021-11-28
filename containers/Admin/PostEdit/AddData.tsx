@@ -155,20 +155,18 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
             <AddIcon />
           </IconButton>
         </Grid>
-        {!!formData.length && (
-          <>
-            <Button
-              onClick={handleClose}
-              variant="outlined"
-              style={{marginRight: 12}}>
-              Cancel
-            </Button>
+        <>
+          <Button
+            onClick={handleClose}
+            variant="outlined"
+            style={{marginRight: 12}}>
+            Cancel
+          </Button>
 
-            <Button onClick={() => updateData(formData)} variant="contained">
-              Submit
-            </Button>
-          </>
-        )}
+          <Button onClick={() => updateData(formData)} variant="contained">
+            Submit
+          </Button>
+        </>
       </Box>
     </Modal>
   )

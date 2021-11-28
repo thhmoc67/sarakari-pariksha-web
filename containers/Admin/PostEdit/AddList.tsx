@@ -25,7 +25,7 @@ const AddList = ({data, title, updateForm}) => {
             justifyContent: 'space-between',
             flexDirection: 'row',
           }}>
-          <Button onClick={handleOpenList} startIcon={<EditIcon />}>
+          <Button onClick={handleOpenList} startIcon={<AddIcon />}>
             {title}
           </Button>
         </div>
@@ -129,20 +129,18 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
             <AddIcon />
           </IconButton>
         </Grid>
-        {!!listData?.length && (
-          <>
-            <Button
-              onClick={handleClose}
-              variant="outlined"
-              style={{marginRight: 12}}>
-              Cancel
-            </Button>
+        <>
+          <Button
+            onClick={handleClose}
+            variant="outlined"
+            style={{marginRight: 12}}>
+            Cancel
+          </Button>
 
-            <Button onClick={() => updateData(listData)} variant="contained">
-              Submit
-            </Button>
-          </>
-        )}
+          <Button onClick={() => updateData(listData)} variant="contained">
+            Submit
+          </Button>
+        </>
       </Box>
     </Modal>
   )
