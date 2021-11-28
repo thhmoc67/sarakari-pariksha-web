@@ -6,6 +6,7 @@ import AddData from './AddData'
 import {postInitalState} from '../../../config/constants/postInitalState'
 import AddList from './AddList'
 import AddLinks from './AddLinks'
+import AddCustomData from './AddCustomData'
 
 const PostEdit: NextPage = () => {
   const [form, setForm] = React.useState(postInitalState)
@@ -14,12 +15,36 @@ const PostEdit: NextPage = () => {
     setForm({...form, [attr]: data})
   }
 
+  function updateFormCustomData(data: any, index: number): void {
+    setForm({
+      ...form,
+      customData: [
+        ...form.customData.slice(0, index),
+        {
+          type: form.customData[index].type,
+          label: form.customData[index].label,
+          data,
+        },
+        ...form.customData.slice(index + 1, form.customData.length),
+      ],
+    })
+  }
+
+  function addCustomData(type: string, label: string) {
+    setForm({
+      ...form,
+      customData: [...form.customData, {type, label, data: []}],
+    })
+  }
+
   const listDiffferentEntries = [
     'important_dates',
     'application_fee',
     'age_limit',
     'qualification',
   ]
+
+  console.log('---', form.customData)
   return (
     <Grid container spacing={2}>
       <Grid item md={12} margin={2}>
@@ -52,6 +77,31 @@ const PostEdit: NextPage = () => {
             updateForm={(data: any) => updateForm(data, 'important_links')}
           />
         </Card>
+
+        {form.customData.map((entryItem, index) => {
+          if (entryItem.type === 'list') {
+            return (
+              <Card style={{padding: 12, marginBottom: 12}}>
+                <AddList
+                  data={entryItem.data}
+                  title={entryItem.label}
+                  updateForm={(data: any) => updateFormCustomData(data, index)}
+                />
+              </Card>
+            )
+          } else if (entryItem.type === 'table') {
+            return (
+              <Card style={{padding: 12, marginBottom: 12}}>
+                <AddData
+                  data={entryItem.data}
+                  title={entryItem.label}
+                  updateForm={(data: any) => updateFormCustomData(data, index)}
+                />
+              </Card>
+            )
+          } else return null
+        })}
+        <AddCustomData addCustomData={addCustomData} />
       </Grid>
     </Grid>
   )

@@ -21,7 +21,7 @@ export const postInitalState = {
     // },
   ],
   application_fee_notes: [],
-  payment_modes: ['', '', ''],
+  payment_modes: [],
   age_limit: [
     // {
     //   label: '',
@@ -49,5 +49,5 @@ export const postInitalState = {
     //   ],
     // },
   ],
-  customData: {},
+  customData: [],
 }

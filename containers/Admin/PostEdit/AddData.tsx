@@ -5,8 +5,8 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
-import ViewCompactIcon from '@mui/icons-material/ViewCompact';
 import AddIcon from '@mui/icons-material/AddToPhotos';
+import TableChartIcon from '@mui/icons-material/TableChart';
 
 const AddData = ({data, title, updateForm}) => {
   const [open, setOpen] = React.useState(false)
@@ -20,7 +20,7 @@ const AddData = ({data, title, updateForm}) => {
   return (
     <Grid container spacing={3}>
       <Grid item md={12} marginTop={2}>
-        <Button onClick={handleOpen} startIcon={<ViewCompactIcon />}>
+        <Button onClick={handleOpen} startIcon={<TableChartIcon />}>
           {title}
         </Button>
         {data?.map((item, index: number) => (
