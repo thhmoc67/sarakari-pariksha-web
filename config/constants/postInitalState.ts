@@ -49,4 +49,5 @@ export const postInitalState = {
     //   ],
     // },
   ],
+  customData: {},
 }

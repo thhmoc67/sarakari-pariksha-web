@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 const AddList = ({data, title, updateForm}) => {
   const [openList, setOpenList] = React.useState(false)
@@ -25,7 +26,7 @@ const AddList = ({data, title, updateForm}) => {
             justifyContent: 'space-between',
             flexDirection: 'row',
           }}>
-          <Button onClick={handleOpenList} startIcon={<AddIcon />}>
+          <Button onClick={handleOpenList} startIcon={<FormatListBulletedIcon />}>
             {title}
           </Button>
         </div>

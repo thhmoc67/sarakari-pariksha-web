@@ -3,7 +3,7 @@ import {Grid, TextField} from '@mui/material'
 
 const CommonData = () => {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} marginBottom={2}>
       <Grid item md={4}>
         <TextField label="Post Name" multiline fullWidth />
       </Grid>
