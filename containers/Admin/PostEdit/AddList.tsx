@@ -71,7 +71,7 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
   const [listData, setListData] = React.useState([])
 
   function addInfo() {
-    setListData([])
+    setListData([...listData, ''])
   }
 
   function removeInfo(index: number) {
@@ -107,33 +107,16 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
             spacing={3}
             marginBottom={1}
             key={title + ' list item' + index}>
-            <Grid item md={4}>
+            <Grid item md={11}>
               <TextField
-                label="Label"
+                label="List item"
                 multiline
                 fullWidth
-                defaultValue={listItem[index]}
+                defaultValue={listItem}
                 onChange={e => handleChangeInput(e.target.value, index)}
               />
             </Grid>
-            <Grid item md={4}>
-              <TextField
-                label="Value"
-                multiline
-                fullWidth
-                defaultValue={listItem.value}
-                onChange={e => handleChangeInput(e.target.value, index)}
-              />
-            </Grid>
-            <Grid item md={3}>
-              <TextField
-                label="Notes"
-                multiline
-                fullWidth
-                defaultValue={listItem.note}
-                onChange={e => handleChangeInput(e.target.value, index)}
-              />
-            </Grid>
+
             <Grid item md={1}>
               <IconButton size="large" onClick={() => removeInfo(index)}>
                 <CloseIcon />

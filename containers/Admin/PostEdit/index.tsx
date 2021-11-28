@@ -23,9 +23,9 @@ const PostEdit: NextPage = () => {
             updateForm={(data: any) => updateForm(data, 'application_fee')}
           />
           <AddList
-            data={form.application_fee}
+            data={form.application_fee_notes}
             title={'Notes'}
-            updateForm={(data: any) => updateForm(data, 'application_fee')}
+            updateForm={(data: any) => updateForm(data, 'application_fee_notes')}
           />
         </Card>
       </Grid>
