@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 const AddList = ({data, title, updateForm}) => {
   const [openList, setOpenList] = React.useState(false)
@@ -110,6 +111,7 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
             key={title + ' list item' + index}>
             <Grid item md={11}>
               <TextField
+                size='small'
                 label="List item"
                 multiline
                 fullWidth
@@ -119,15 +121,15 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
             </Grid>
 
             <Grid item md={1}>
-              <IconButton size="large" onClick={() => removeInfo(index)}>
+              <IconButton size="small" onClick={() => removeInfo(index)}>
                 <CloseIcon />
               </IconButton>
             </Grid>
           </Grid>
         ))}
         <Grid item md={12} margin={3}>
-          <IconButton size="large" onClick={addInfo}>
-            <AddIcon />
+          <IconButton size="small" onClick={addInfo}>
+            <PlaylistAddIcon />
           </IconButton>
         </Grid>
         <>

@@ -5,6 +5,7 @@ import CommonData from './CommonData'
 import AddData from './AddData'
 import {postInitalState} from '../../../config/constants/postInitalState'
 import AddList from './AddList'
+import AddLinks from './AddLinks'
 
 const PostEdit: NextPage = () => {
   const [form, setForm] = React.useState(postInitalState)
@@ -42,6 +43,13 @@ const PostEdit: NextPage = () => {
             data={form['payment_modes']}
             title={'Payment Modes'}
             updateForm={(data: any) => updateForm(data, 'payment_modes')}
+          />
+        </Card>
+        <Card style={{padding: 12, marginBottom: 12}}>
+          <AddLinks
+            data={form.important_links}
+            title={'Important Links'}
+            updateForm={(data: any) => updateForm(data, 'important_links')}
           />
         </Card>
       </Grid>

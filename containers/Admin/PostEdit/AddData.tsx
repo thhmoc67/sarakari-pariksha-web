@@ -1,12 +1,12 @@
 import React from 'react'
 import {Button, Card, Grid, IconButton, TextField} from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
 import ViewCompactIcon from '@mui/icons-material/ViewCompact';
+import AddIcon from '@mui/icons-material/AddToPhotos';
 
 const AddData = ({data, title, updateForm}) => {
   const [open, setOpen] = React.useState(false)
@@ -115,6 +115,7 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
           <Grid container spacing={3} marginBottom={1} key={title + index}>
             <Grid item md={4}>
               <TextField
+                size='small'
                 label="Label"
                 multiline
                 fullWidth
@@ -126,6 +127,7 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
             </Grid>
             <Grid item md={4}>
               <TextField
+                size='small'
                 label="Value"
                 multiline
                 fullWidth
@@ -137,6 +139,7 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
             </Grid>
             <Grid item md={3}>
               <TextField
+                size='small'
                 label="Notes"
                 multiline
                 fullWidth
@@ -145,14 +148,14 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
               />
             </Grid>
             <Grid item md={1}>
-              <IconButton size="large" onClick={() => removeInfo(index)}>
+              <IconButton size="small" onClick={() => removeInfo(index)}>
                 <CloseIcon />
               </IconButton>
             </Grid>
           </Grid>
         ))}
         <Grid item md={12} margin={3}>
-          <IconButton size="large" onClick={addInfo}>
+          <IconButton size="small" onClick={addInfo}>
             <AddIcon />
           </IconButton>
         </Grid>
