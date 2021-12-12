@@ -211,7 +211,7 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
                         size="small"
                         label="Link"
                         fullWidth
-                        defaultValue={link.value}
+                        defaultValue={link.url}
                         onChange={e =>
                           handleChangeLink(
                             'url',
