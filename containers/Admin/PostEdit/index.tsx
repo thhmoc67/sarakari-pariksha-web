@@ -1,4 +1,4 @@
-import {Button, Card, Grid} from '@mui/material'
+import {Box, Button, Card, Grid, Modal} from '@mui/material'
 import type {NextPage} from 'next'
 import React from 'react'
 import CommonData from './CommonData'
@@ -13,6 +13,8 @@ import {collection, setDoc} from 'firebase/firestore'
 import {firebaseConfig} from '../../../config/firebase'
 import {useRouter} from 'next/dist/client/router'
 import {doc, getDoc} from 'firebase/firestore'
+import CloseIcon from '@mui/icons-material/Close'
+import PostPreview from '../../../components/PostPreview'
 
 const PostEdit: NextPage = () => {
   const [form, setForm] = React.useState(null)
@@ -21,6 +23,8 @@ const PostEdit: NextPage = () => {
   let firebaseApp = React.useRef<unknown>()
   let db = React.useRef<unknown>()
   const route = useRouter()
+
+  const [preview, setPreview] = React.useState(false)
 
   function updateForm(data: any, attr: string): void {
     setForm({...form, [attr]: data})
@@ -113,7 +117,9 @@ const PostEdit: NextPage = () => {
     <Grid container spacing={2}>
       <Grid item md={10}></Grid>
       <Grid item md={1} marginTop={2}>
-        <Button variant="contained">Preview</Button>
+        <Button variant="contained" onClick={() => setPreview(true)}>
+          Preview
+        </Button>
       </Grid>
       <Grid item md={1} marginTop={2}>
         <Button variant="contained" onClick={dbUpdate}>
@@ -186,8 +192,39 @@ const PostEdit: NextPage = () => {
           <AddCustomData addCustomData={addCustomData} />
         </Grid>
       )}
+
+      <Modal
+        open={preview}
+        onClose={() => setPreview(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <CloseIcon
+              style={{cursor: 'pointer'}}
+              onClick={() => setPreview(false)}
+            />
+          </div>
+          <PostPreview data={form} />
+        </Box>
+      </Modal>
     </Grid>
   )
 }
 
 export default PostEdit
+
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 1024,
+  height: '90vh',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  overflow: 'scroll',
+  p: 4,
+
+}
