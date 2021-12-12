@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import {IconButton} from '@mui/material'
 import {Edit as EditIcon} from '@mui/icons-material'
+import Link from 'next/link'
 
 const StyledTableCell = styled(TableCell)(({theme}) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,13 +44,15 @@ export default function PostTable({rows}) {
         </TableHead>
         <TableBody>
           {rows?.map((row: object) => (
-            <StyledTableRow key={row.id}>
+            <StyledTableRow key={'posttable' + row.id}>
               <StyledTableCell align="left">{row.id}</StyledTableCell>
               <StyledTableCell align="left">{row.post_name}</StyledTableCell>
               <StyledTableCell align="right">
-                <IconButton color="primary" size="large">
-                  <EditIcon />
-                </IconButton>
+                <Link href={'/admin/post/'+ row.id}>
+                  <IconButton color="primary" size="large">
+                    <EditIcon />
+                  </IconButton>
+                </Link>
               </StyledTableCell>
             </StyledTableRow>
           ))}

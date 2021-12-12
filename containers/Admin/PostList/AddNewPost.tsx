@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import {IconButton, Input, TextField} from '@mui/material'
 import {AddCircleOutlined} from '@mui/icons-material'
+import {addDoc, collection} from 'firebase/firestore'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -18,10 +19,25 @@ const style = {
   p: 4,
 }
 
-export default function BasicModal() {
+export default function BasicModal({db, getPosts}) {
   const [open, setOpen] = React.useState(false)
+  const [postName, setPosrName] = React.useState('')
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
+  async function addNewPost() {
+    try {
+      const docRef = await addDoc(collection(db.current, 'posts'), {
+        post_name: postName,
+        created_at: new Date(),
+      })
+      await getPosts()
+      handleClose()
+      console.log('Document written with ID: ', docRef.id)
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+  }
 
   return (
     <div className="admin-add-new-post">
@@ -40,10 +56,16 @@ export default function BasicModal() {
           <Typography id="modal-modal-title" variant="h6" component="h1">
             Add new post
           </Typography>
-          <TextField fullWidth label="Post Name" color="primary" />
+          <br />
+          <TextField
+            fullWidth
+            label="Post Name"
+            color="primary"
+            onChange={e => setPosrName(e.target.value)}
+          />
           <br />
           <br />
-          <Button fullWidth variant="contained">
+          <Button fullWidth variant="contained" onClick={addNewPost}>
             Add
           </Button>
         </Box>

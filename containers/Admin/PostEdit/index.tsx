@@ -1,4 +1,4 @@
-import {Card, Grid} from '@mui/material'
+import {Button, Card, Grid} from '@mui/material'
 import type {NextPage} from 'next'
 import React from 'react'
 import CommonData from './CommonData'
@@ -7,9 +7,20 @@ import {postInitalState} from '../../../config/constants/postInitalState'
 import AddList from './AddList'
 import AddLinks from './AddLinks'
 import AddCustomData from './AddCustomData'
+import {initializeApp} from 'firebase/app'
+import {getFirestore} from 'firebase/firestore'
+import {collection, setDoc} from 'firebase/firestore'
+import {firebaseConfig} from '../../../config/firebase'
+import {useRouter} from 'next/dist/client/router'
+import {doc, getDoc} from 'firebase/firestore'
 
 const PostEdit: NextPage = () => {
-  const [form, setForm] = React.useState(postInitalState)
+  const [form, setForm] = React.useState(null)
+  const [loader, setLoader] = React.useState(false)
+  const [postData, setPostData] = React.useState(null)
+  let firebaseApp = React.useRef<unknown>()
+  let db = React.useRef<unknown>()
+  const route = useRouter()
 
   function updateForm(data: any, attr: string): void {
     setForm({...form, [attr]: data})
@@ -44,65 +55,137 @@ const PostEdit: NextPage = () => {
     'qualification',
   ]
 
-  console.log('---', form.customData)
+  async function dbUpdate() {
+    setLoader(true)
+    try {
+      const postRef = collection(db.current, 'posts')
+
+      await setDoc(
+        doc(
+          postRef,
+          location.pathname.split('/')[location.pathname.split('/').length - 1],
+        ),
+        form,
+      )
+
+      console.log('Document written with ID: ', docRef.id)
+    } catch (e) {
+      console.error('Error adding document: ', e)
+    }
+    setLoader(false)
+  }
+
+  async function firebaseSetup() {
+    firebaseApp.current = await initializeApp(firebaseConfig)
+    db.current = await getFirestore()
+    getPostData()
+  }
+
+  async function getPostData() {
+    try {
+      const docRef = await doc(
+        db.current,
+        'posts',
+        location.pathname.split('/')[location.pathname.split('/').length - 1],
+      )
+      const docSnap = await getDoc(docRef)
+
+      if (docSnap?.exists()) {
+        console.log('Document data:', docSnap.data())
+        const data = docSnap.data()
+        setForm({...postInitalState, ...data})
+      } else {
+        // doc.data() will be undefined in this case
+        console.log('No such document!')
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  React.useEffect(() => {
+    firebaseSetup()
+    return () => {}
+  }, [])
+
+  if (!form) return null
   return (
     <Grid container spacing={2}>
-      <Grid item md={12} margin={2}>
-        <CommonData />
-        {listDiffferentEntries.map(entryItem => (
-          <Card style={{padding: 12, marginBottom: 12}} key={entryItem}>
-            <AddData
-              data={form[entryItem]}
-              title={entryItem.split('_').join(' ').toUpperCase()}
-              updateForm={(data: any) => updateForm(data, entryItem)}
-            />
+      <Grid item md={10}></Grid>
+      <Grid item md={1} marginTop={2}>
+        <Button variant="contained">Preview</Button>
+      </Grid>
+      <Grid item md={1} marginTop={2}>
+        <Button variant="contained" onClick={dbUpdate}>
+          Save
+        </Button>
+      </Grid>
+      {loader ? (
+        'loading...'
+      ) : (
+        <Grid item md={12} margin={2}>
+          <CommonData form={form} updateForm={updateForm} />
+          {listDiffferentEntries.map(entryItem => (
+            <Card style={{padding: 12, marginBottom: 12}} key={entryItem}>
+              <AddData
+                data={form[entryItem]}
+                title={entryItem.split('_').join(' ').toUpperCase()}
+                updateForm={(data: any) => updateForm(data, entryItem)}
+              />
+              <AddList
+                data={form[entryItem + '_notes']}
+                title={'Notes'}
+                updateForm={(data: any) =>
+                  updateForm(data, entryItem + '_notes')
+                }
+              />
+            </Card>
+          ))}
+          <Card style={{padding: 12, marginBottom: 12}}>
             <AddList
-              data={form[entryItem + '_notes']}
-              title={'Notes'}
-              updateForm={(data: any) => updateForm(data, entryItem + '_notes')}
+              data={form['payment_modes']}
+              title={'Payment Modes'}
+              updateForm={(data: any) => updateForm(data, 'payment_modes')}
             />
           </Card>
-        ))}
-        <Card style={{padding: 12, marginBottom: 12}}>
-          <AddList
-            data={form['payment_modes']}
-            title={'Payment Modes'}
-            updateForm={(data: any) => updateForm(data, 'payment_modes')}
-          />
-        </Card>
-        <Card style={{padding: 12, marginBottom: 12}}>
-          <AddLinks
-            data={form.important_links}
-            title={'Important Links'}
-            updateForm={(data: any) => updateForm(data, 'important_links')}
-          />
-        </Card>
+          <Card style={{padding: 12, marginBottom: 12}}>
+            <AddLinks
+              data={form.important_links}
+              title={'Important Links'}
+              updateForm={(data: any) => updateForm(data, 'important_links')}
+            />
+          </Card>
 
-        {form.customData.map((entryItem, index) => {
-          if (entryItem.type === 'list') {
-            return (
-              <Card style={{padding: 12, marginBottom: 12}}>
-                <AddList
-                  data={entryItem.data}
-                  title={entryItem.label}
-                  updateForm={(data: any) => updateFormCustomData(data, index)}
-                />
-              </Card>
-            )
-          } else if (entryItem.type === 'table') {
-            return (
-              <Card style={{padding: 12, marginBottom: 12}}>
-                <AddData
-                  data={entryItem.data}
-                  title={entryItem.label}
-                  updateForm={(data: any) => updateFormCustomData(data, index)}
-                />
-              </Card>
-            )
-          } else return null
-        })}
-        <AddCustomData addCustomData={addCustomData} />
-      </Grid>
+          {form.customData.map((entryItem, index) => {
+            if (entryItem.type === 'list') {
+              return (
+                <Card style={{padding: 12, marginBottom: 12}}>
+                  <AddList
+                    data={entryItem.data}
+                    title={entryItem.label}
+                    updateForm={(data: any) =>
+                      updateFormCustomData(data, index)
+                    }
+                  />
+                </Card>
+              )
+            } else if (entryItem.type === 'table') {
+              return (
+                <Card style={{padding: 12, marginBottom: 12}}>
+                  <AddData
+                    data={entryItem.data}
+                    title={entryItem.label}
+                    updateForm={(data: any) =>
+                      updateFormCustomData(data, index)
+                    }
+                  />
+                </Card>
+              )
+            } else return null
+          })}
+          <AddCustomData addCustomData={addCustomData} />
+        </Grid>
+      )}
     </Grid>
   )
 }

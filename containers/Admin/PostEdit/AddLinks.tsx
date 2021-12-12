@@ -37,7 +37,7 @@ const AddLinks = ({data, title, updateForm}) => {
               <Typography>{item.label}</Typography>
             </Grid>
             <Grid md={6} padding={1}>
-              {item.links.map((link, index) => (
+              {item?.links?.map((link, index) => (
                 <React.Fragment key={'urlimplink' + index}>
                   <u>
                     <a
