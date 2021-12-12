@@ -9,14 +9,14 @@ export const adminMenulist = [
     route: '/admin/post',
     key: 'post',
   },
-  {
-    label: 'Home',
-    route: '/admin',
-    key: 'home',
-  },
-  {
-    label: 'Home',
-    route: '/admin',
-    key: 'home',
-  },
+  // {
+  //   label: 'Home',
+  //   route: '/admin',
+  //   key: 'home',
+  // },
+  // {
+  //   label: 'Home',
+  //   route: '/admin',
+  //   key: 'home',
+  // },
 ]
