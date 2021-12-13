@@ -1,6 +1,10 @@
 import React from 'react'
 
-const PostPreview = ({data}) => {
+type PostPreview = {
+  data: object
+}
+
+const PostPreview = ({data}: PostPreview) => {
   const tableBody = (title, list, notes) => (
     <div className="post-table-body">
       <h1>{title}</h1>
