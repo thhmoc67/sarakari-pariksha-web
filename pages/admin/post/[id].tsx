@@ -1,11 +1,11 @@
 import React from 'react'
 import LayoutAdmin from '../../../components/LayoutAdmin'
 import PostEdit from '../../../containers/Admin/PostEdit'
-import type {NextPage} from 'next'
-import Head from 'next/head'
+// import type {NextPage} from 'next'
+// import Head from 'next/head'
 
 interface Props {}
-const EditPostPage: NextPage<Props> = () => {
+const EditPostPage = () => {
   return (
     <LayoutAdmin>
       <PostEdit />
@@ -13,8 +13,8 @@ const EditPostPage: NextPage<Props> = () => {
   )
 }
 
-EditPostPage.getInitialProps = async ({req}: any) => {
-  return {}
-}
+// EditPostPage.getInitialProps = async ({req}: any) => {
+//   return {}
+// }
 
 export default EditPostPage

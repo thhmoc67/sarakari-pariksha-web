@@ -1,11 +1,11 @@
 import React from 'react'
 import LayoutAdmin from '../../components/LayoutAdmin'
 import Admin from '../../containers/Admin'
-import type {NextPage} from 'next'
-import Head from 'next/head'
-interface Props {}
+// import type {NextPage} from 'next'
+// import Head from 'next/head'
+// interface Props {}
 
-const AdminPage: NextPage<Props> = () => {
+const AdminPage= () => {
   return (
     <LayoutAdmin>
       <Admin />
@@ -13,8 +13,8 @@ const AdminPage: NextPage<Props> = () => {
   )
 }
 
-AdminPage.getInitialProps = async ({req}: any) => {
-  return {}
-}
+// AdminPage.getInitialProps = async ({req}: any) => {
+//   return {}
+// }
 
 export default AdminPage
