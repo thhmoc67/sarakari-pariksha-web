@@ -5,15 +5,27 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
-import AddIcon from '@mui/icons-material/AddToPhotos';
-import TableChartIcon from '@mui/icons-material/TableChart';
+import AddIcon from '@mui/icons-material/AddToPhotos'
+import TableChartIcon from '@mui/icons-material/TableChart'
 
-const AddData = ({data, title, updateForm}) => {
+type AddData = {
+  data: Data[]
+  title: string
+  updateForm: (data: []) => void
+}
+
+type Data = {
+  label: string
+  value: string
+  note: string
+}
+
+const AddData = ({data, title, updateForm}: AddData) => {
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  function updateData(data) {
+  function updateData(data: any) {
     updateForm(data)
     handleClose()
   }
@@ -69,9 +81,22 @@ const style = {
 }
 
 // -----------------------------------------------------component input array-------------------------------------------------------------------------------------------------
+type InputModal = {
+  open: boolean
+  handleClose: () => void
+  data: Data[]
+  title: string
+  updateData: (form: Data[]) => void
+}
 
-const InputModal = ({open, handleClose, data, title, updateData}) => {
-  const [formData, setFormData] = React.useState([])
+const InputModal = ({
+  open,
+  handleClose,
+  data,
+  title,
+  updateData,
+}: InputModal) => {
+  const [formData, setFormData] = React.useState<[] | Data[]>([])
 
   function addInfo() {
     setFormData([
@@ -84,7 +109,7 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
     ])
   }
 
-  function removeInfo(index) {
+  function removeInfo(index: number) {
     setFormData([
       ...formData.slice(0, index),
       ...formData.slice(index + 1, formData.length),
@@ -92,7 +117,7 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
   }
 
   function handleChangeInput(attr: string, value: any, index: number) {
-    let data = formData
+    let data: any = formData
     data[index][attr] = value
     setFormData(data)
   }
@@ -115,7 +140,7 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
           <Grid container spacing={3} marginBottom={1} key={title + index}>
             <Grid item md={4}>
               <TextField
-                size='small'
+                size="small"
                 label="Label"
                 multiline
                 fullWidth
@@ -127,7 +152,7 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
             </Grid>
             <Grid item md={4}>
               <TextField
-                size='small'
+                size="small"
                 label="Value"
                 multiline
                 fullWidth
@@ -139,7 +164,7 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
             </Grid>
             <Grid item md={3}>
               <TextField
-                size='small'
+                size="small"
                 label="Notes"
                 multiline
                 fullWidth
@@ -161,8 +186,8 @@ const InputModal = ({open, handleClose, data, title, updateData}) => {
         </Grid>
         <>
           <Button
-            onClick={handleClose}
-            variant="outlined"
+            onClick={e => handleClose()}
+            variant={'outlined'}
             style={{marginRight: 12}}>
             Cancel
           </Button>

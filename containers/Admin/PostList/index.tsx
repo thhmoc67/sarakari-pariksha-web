@@ -11,9 +11,9 @@ import {collection, addDoc, getDocs} from 'firebase/firestore'
 import {firebaseConfig} from '../../../config/firebase'
 
 const PostList: NextPage = () => {
-  const [postsList, setPostsList] = React.useState([])
+  const [postsList, setPostsList] = React.useState<any>([])
   let firebaseApp = React.useRef<unknown>()
-  let db = React.useRef<unknown>()
+  let db = React.useRef<any>()
 
   function firebaseSetup() {
     firebaseApp.current = initializeApp(firebaseConfig)
@@ -25,7 +25,7 @@ const PostList: NextPage = () => {
   async function getPosts() {
     const querySnapshot = await getDocs(collection(db.current, 'posts'))
     // console.log('----', querySnapshot.data())
-    const list = []
+    const list: any = []
     querySnapshot.forEach(doc => {
       list.push({...doc.data(), id: doc.id})
       console.log(`${doc.id} => ${JSON.stringify(doc.data())}`)

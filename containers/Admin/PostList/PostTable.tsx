@@ -31,7 +31,7 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
   },
 }))
 
-export default function PostTable({rows}) {
+export default function PostTable({rows}: any) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{minWidth: 700}} aria-label="customized table">
@@ -43,12 +43,12 @@ export default function PostTable({rows}) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows?.map((row: object) => (
+          {rows?.map((row: any) => (
             <StyledTableRow key={'posttable' + row.id}>
               <StyledTableCell align="left">{row.id}</StyledTableCell>
               <StyledTableCell align="left">{row.post_name}</StyledTableCell>
               <StyledTableCell align="right">
-                <Link href={'/admin/post/'+ row.id}>
+                <Link href={'/admin/post/' + row.id}>
                   <IconButton color="primary" size="large">
                     <EditIcon />
                   </IconButton>

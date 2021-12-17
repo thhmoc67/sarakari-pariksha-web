@@ -8,13 +8,20 @@ import CloseIcon from '@mui/icons-material/Close'
 import InsertLinkIcon from '@mui/icons-material/InsertLink'
 import AddLinkIcon from '@mui/icons-material/AddLink'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
+import {Link, LinkList, PostList} from '../../../components/PostPreview'
 
-const AddLinks = ({data, title, updateForm}) => {
+type AddLinks = {
+  data: PostList[]
+  title: string
+  updateForm: (data: PostList) => void
+}
+
+const AddLinks = ({data, title, updateForm}: AddLinks) => {
   const [openList, setOpenList] = React.useState(false)
   const handleOpenList = () => setOpenList(true)
   const handleCloseList = () => setOpenList(false)
 
-  function updateData(data) {
+  function updateData(data: PostList) {
     updateForm(data)
     handleCloseList()
   }
@@ -31,13 +38,13 @@ const AddLinks = ({data, title, updateForm}) => {
             {title}
           </Button>
         </div>
-        {data?.map((item, index: number) => (
+        {data?.map((item: any, index: number) => (
           <Grid container key={title + ' card' + index}>
             <Grid md={6} padding={1}>
               <Typography>{item.label}</Typography>
             </Grid>
             <Grid md={6} padding={1}>
-              {item?.links?.map((link, index) => (
+              {item?.links?.map((link: Link, index: number) => (
                 <React.Fragment key={'urlimplink' + index}>
                   <u>
                     <a
@@ -88,9 +95,16 @@ const style = {
 }
 
 // -----------------------------------------------------component list-------------------------------------------------------------------------------------------------
+type ListModal = {
+  open: boolean
+  handleClose: () => void
+  data: any
+  title: string
+  updateData: (data: PostList) => void
+}
 
-const ListModal = ({open, handleClose, data, title, updateData}) => {
-  const [listData, setListData] = React.useState([])
+const ListModal = ({open, handleClose, data, title, updateData}: ListModal) => {
+  const [listData, setListData] = React.useState<any>([])
   const [count, setCount] = React.useState(0)
 
   function addInfo() {
@@ -111,7 +125,7 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
     setCount(newCount)
   }
 
-  function removeLink(index: number, linkIndex) {
+  function removeLink(index: number, linkIndex: number) {
     var newData = listData
     var newCount = count + 1
     newData[index].links = [
@@ -161,7 +175,7 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
           {title}
         </Typography>
         <Grid container spacing={1}>
-          {listData?.map((listItem, index: number) => (
+          {listData?.map((listItem: any, index: number) => (
             <Grid item md={6} key={title + ' list item' + index} padding={1}>
               <Grid
                 style={{
@@ -188,7 +202,7 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
                     <CloseIcon color={'error'} />
                   </IconButton>
                 </Grid>
-                {listItem?.links?.map((link, linkIndex: number) => (
+                {listItem?.links?.map((link: Link, linkIndex: number) => (
                   <React.Fragment key={'listindex' + linkIndex}>
                     <Grid item md={5}>
                       <TextField

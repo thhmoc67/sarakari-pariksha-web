@@ -19,7 +19,7 @@ const style = {
   p: 4,
 }
 
-export default function BasicModal({db, getPosts}) {
+export default function BasicModal({db, getPosts}: any) {
   const [open, setOpen] = React.useState(false)
   const [postName, setPosrName] = React.useState('')
   const handleOpen = () => setOpen(true)

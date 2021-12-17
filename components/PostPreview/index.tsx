@@ -1,15 +1,49 @@
 import React from 'react'
 
-type PostPreview = {
-  data: object
+export type PostPreview = {
+  data: Post
+}
+
+export type PostList = {
+  label?: string
+  value?: string
+  note?: string
+}
+
+export type LinkList = {
+  label: string
+  links: Link[]
+}
+
+export type Link = {
+  url: string
+  label: string
+}
+
+export type Post = {
+  post_name?: string
+  post_date?: string
+  description?: string
+  title?: string
+  subtitle?: string
+  caption?: string
+  important_dates_notes?: string[]
+  important_dates?: PostList[]
+  application_fee?: PostList[]
+  application_fee_notes?: string[]
+  age_limit?: PostList[]
+  age_limit_notes?: string[]
+  qualification?: PostList[]
+  qualification_notes?: string[]
+  important_links?: LinkList[]
 }
 
 const PostPreview = ({data}: PostPreview) => {
-  const tableBody = (title, list, notes) => (
+  const tableBody = (title?: string, list?: PostList[], notes?: string[]) => (
     <div className="post-table-body">
       <h1>{title}</h1>
       <ul>
-        {list?.map((date, index) => (
+        {list?.map((date: PostList, index) => (
           <li key={'important_dates' + index}>
             {date.label} : {date.value}
             <span>{date.note}</span>

@@ -17,11 +17,11 @@ import CloseIcon from '@mui/icons-material/Close'
 import PostPreview from '../../../components/PostPreview'
 
 const PostEdit: NextPage = () => {
-  const [form, setForm] = React.useState(null)
+  const [form, setForm] = React.useState<any>(null)
   const [loader, setLoader] = React.useState(false)
   const [postData, setPostData] = React.useState(null)
   let firebaseApp = React.useRef<unknown>()
-  let db = React.useRef<unknown>()
+  let db = React.useRef<any>()
   const route = useRouter()
 
   const [preview, setPreview] = React.useState(false)
@@ -162,7 +162,7 @@ const PostEdit: NextPage = () => {
             />
           </Card>
 
-          {form.customData.map((entryItem, index) => {
+          {form.customData.map((entryItem: any, index: number) => {
             if (entryItem.type === 'list') {
               return (
                 <Card style={{padding: 12, marginBottom: 12}}>
@@ -226,5 +226,4 @@ const style = {
   boxShadow: 24,
   overflow: 'scroll',
   p: 4,
-
 }

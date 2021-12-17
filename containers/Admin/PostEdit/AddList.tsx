@@ -6,15 +6,15 @@ import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
 import CloseIcon from '@mui/icons-material/Close'
 import EditIcon from '@mui/icons-material/Edit'
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
 
-const AddList = ({data, title, updateForm}) => {
+const AddList = ({data, title, updateForm}: any) => {
   const [openList, setOpenList] = React.useState(false)
   const handleOpenList = () => setOpenList(true)
   const handleCloseList = () => setOpenList(false)
 
-  function updateData(data) {
+  function updateData(data: any) {
     updateForm(data)
     handleCloseList()
   }
@@ -27,11 +27,13 @@ const AddList = ({data, title, updateForm}) => {
             justifyContent: 'space-between',
             flexDirection: 'row',
           }}>
-          <Button onClick={handleOpenList} startIcon={<FormatListBulletedIcon />}>
+          <Button
+            onClick={handleOpenList}
+            startIcon={<FormatListBulletedIcon />}>
             {title}
           </Button>
         </div>
-        {data?.map((item, index: number) => (
+        {data?.map((item: any, index: number) => (
           <Grid container key={title + ' card' + index}>
             <Grid md={12} padding={1}>
               <Typography>{item}</Typography>
@@ -69,8 +71,8 @@ const style = {
 
 // -----------------------------------------------------component list-------------------------------------------------------------------------------------------------
 
-const ListModal = ({open, handleClose, data, title, updateData}) => {
-  const [listData, setListData] = React.useState([])
+const ListModal = ({open, handleClose, data, title, updateData}: any) => {
+  const [listData, setListData] = React.useState<any>([])
 
   function addInfo() {
     setListData([...listData, ''])
@@ -103,7 +105,7 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
           {title}
         </Typography>
 
-        {listData?.map((listItem, index: number) => (
+        {listData?.map((listItem: any, index: number) => (
           <Grid
             container
             spacing={3}
@@ -111,7 +113,7 @@ const ListModal = ({open, handleClose, data, title, updateData}) => {
             key={title + ' list item' + index}>
             <Grid item md={11}>
               <TextField
-                size='small'
+                size="small"
                 label="List item"
                 multiline
                 fullWidth

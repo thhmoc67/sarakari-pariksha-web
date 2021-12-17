@@ -1,7 +1,7 @@
 import React from 'react'
 import {Grid, TextField} from '@mui/material'
 
-const CommonData = ({form, updateForm}) => {
+const CommonData = ({form, updateForm}: any) => {
   console.log('form.post_name', form, form.post_name)
   return (
     <Grid container spacing={3} marginBottom={2}>
@@ -20,9 +20,7 @@ const CommonData = ({form, updateForm}) => {
           multiline
           fullWidth
           value={form.post_date}
-          onChange={e =>
-            updateForm(e.target.value, 'post_date')
-          }
+          onChange={e => updateForm(e.target.value, 'post_date')}
         />
       </Grid>
       <Grid item md={4}>
@@ -31,9 +29,7 @@ const CommonData = ({form, updateForm}) => {
           multiline
           value={form.description}
           fullWidth
-          onChange={e =>
-            updateForm(e.target.value, 'description')
-          }
+          onChange={e => updateForm(e.target.value, 'description')}
         />
       </Grid>
       <Grid item md={4}>

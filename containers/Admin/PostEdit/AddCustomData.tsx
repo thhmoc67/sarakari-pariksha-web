@@ -26,7 +26,12 @@ const style = {
   p: 4,
 }
 
-const AddCustomData = ({addCustomData}) => {
+type CustomItemModal = {
+  handleClose?: () => void
+  addCustomData: (type: string, label: string) => void
+}
+
+const AddCustomData = ({addCustomData}: CustomItemModal) => {
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -48,7 +53,7 @@ const AddCustomData = ({addCustomData}) => {
 
 export default AddCustomData
 
-const CustomItemModal = ({handleClose, addCustomData}) => {
+const CustomItemModal = ({handleClose, addCustomData}: any) => {
   const [label, setLabel] = React.useState('')
   const [type, setType] = React.useState('')
   function submitData() {
@@ -57,7 +62,7 @@ const CustomItemModal = ({handleClose, addCustomData}) => {
   }
   return (
     <Modal
-      open={open}
+      open={!!open}
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
