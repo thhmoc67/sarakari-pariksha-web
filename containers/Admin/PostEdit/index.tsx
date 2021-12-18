@@ -15,6 +15,7 @@ import {useRouter} from 'next/dist/client/router'
 import {doc, getDoc} from 'firebase/firestore'
 import CloseIcon from '@mui/icons-material/Close'
 import PostPreview from '../../../components/PostPreview'
+import Tags from './Tags'
 
 const PostEdit: NextPage = () => {
   const [form, setForm] = React.useState<any>(null)
@@ -115,7 +116,9 @@ const PostEdit: NextPage = () => {
   if (!form) return null
   return (
     <Grid container spacing={2}>
-      <Grid item md={10}></Grid>
+      <Grid item md={10} marginTop={2}>
+        <Tags form={form} updateForm={updateForm} />
+      </Grid>
       <Grid item md={1} marginTop={2}>
         <Button variant="contained" onClick={() => setPreview(true)}>
           Preview
