@@ -1,19 +1,32 @@
 import React from 'react'
 import LatestUpdates from '../../components/LatestUpdates'
 import ListCard from '../../components/ListCard'
+import {tagsList} from '../../config/constants/tags'
 import {examList, updateList} from './constants'
 
-const Home = () => {
+const Home = ({results}: any) => {
   return (
     <div className="home-container ">
       <LatestUpdates list={updateList} />
       <div className="flex-row cards">
-        <ListCard title="Result" list={examList} link="/results" />
-        <ListCard title="Result" list={examList} link="/results" />
-        <ListCard title="Result" list={examList} link="/results" />
-        <ListCard title="Result" list={examList} link="/results" />
-        <ListCard title="Result" list={examList} link="/results" />
-        <ListCard title="Result" list={examList} link="/results" />
+        <ListCard
+          title="Latest Jobs"
+          list={results?.latestjobs}
+          link="/latestjobs"
+        />
+        <ListCard title="Result" list={results?.results} link="/results" />
+        <ListCard
+          title="Admit Card"
+          list={results?.admitcard}
+          link="/admitcard"
+        />
+        <ListCard
+          title="Answer Key"
+          list={results?.answerkey}
+          link="/answerkey"
+        />
+        <ListCard title="Syllabus" list={results?.syllabus} link="/syllabus" />
+        <ListCard title="Admission" list={results?.admission} link="/admission" />
       </div>
     </div>
   )

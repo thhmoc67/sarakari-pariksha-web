@@ -1,15 +1,7 @@
 import React from 'react'
 import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
-
-const tagsList = [
-  'latest jobs',
-  'results',
-  'admin card',
-  'anwer key',
-  'syllabus',
-  'admission',
-]
+import {tagsList} from '../../../config/constants/tags'
 
 function Tags({form, updateForm}: any) {
   function handleDelete(tag: any) {

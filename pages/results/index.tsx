@@ -35,7 +35,7 @@ Results.getInitialProps = async ({req}: any) => {
   const db = getFirestore()
   const q = query(
     collection(db, 'posts'),
-    where('tags', 'array-contains', 'syllabus'),
+    where('tags', 'array-contains', 'results'),
   )
 
   const querySnapshot = await getDocs(q)

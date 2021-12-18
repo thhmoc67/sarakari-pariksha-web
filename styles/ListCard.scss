@@ -2,7 +2,6 @@
 
 .list-card-component {
   width: 32%;
-  text-align: center;
   border: 1px solid $primary;
 
   h3 {
@@ -10,13 +9,15 @@
     padding: 8px;
     background-color: $primary;
     color: $white;
+    text-align: center;
   }
 
   li {
     margin: 12px;
   }
 
-  a {
+  // a,
+  .viewmore {
     font-weight: bold;
     font-size: 18px;
     text-align: right !important;

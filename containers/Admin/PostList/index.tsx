@@ -24,7 +24,6 @@ const PostList: NextPage = () => {
 
   async function getPosts() {
     const querySnapshot = await getDocs(collection(db.current, 'posts'))
-    // console.log('----', querySnapshot.data())
     const list: any = []
     querySnapshot.forEach(doc => {
       list.push({...doc.data(), id: doc.id})
