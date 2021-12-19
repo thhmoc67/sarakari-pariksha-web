@@ -4,10 +4,8 @@ import Layout from '../components/Layout'
 import Home from '../containers/Home'
 import {initializeApp} from 'firebase/app'
 import {getFirestore} from 'firebase/firestore'
-// import {collection, setDoc} from 'firebase/firestore'
 import {firebaseConfig} from '../config/firebase'
-import {collection, query, where, getDocs} from 'firebase/firestore'
-import {tagsList} from '../config/constants/tags'
+import {collection, getDocs} from 'firebase/firestore'
 import {useEffect, useState} from 'react'
 
 interface Props {}
