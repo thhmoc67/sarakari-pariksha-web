@@ -62,8 +62,8 @@ const App: NextPage<Props> = props => {
   return (
     <>
       <Head>
-        <title>Sarkari Pariksa</title>
-        <meta name="description" content="Sarkari Pariksa" />
+        <title>Sarkari Pariksha</title>
+        <meta name="description" content="Sarkari Pariksha" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
