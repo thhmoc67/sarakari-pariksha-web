@@ -20,9 +20,11 @@ const AnswerkeyPage = props => {
 
     const list = []
     querySnapshot.forEach(doc => {
+      const data = doc.data()
       list.push({
         id: doc.id,
-        title: doc.data().post_name,
+        title: data.post_name,
+        isNew: data.isNew,
       })
     })
     setResults(list)
