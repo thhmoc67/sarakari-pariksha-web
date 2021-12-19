@@ -11,7 +11,6 @@ import {initializeApp} from 'firebase/app'
 import {getFirestore} from 'firebase/firestore'
 import {collection, setDoc} from 'firebase/firestore'
 import {firebaseConfig} from '../../../config/firebase'
-import {useRouter} from 'next/dist/client/router'
 import {doc, getDoc} from 'firebase/firestore'
 import CloseIcon from '@mui/icons-material/Close'
 import PostPreview from '../../../components/PostPreview'
@@ -21,10 +20,8 @@ import NewPost from './NewPost'
 const PostEdit: NextPage = () => {
   const [form, setForm] = React.useState<any>(null)
   const [loader, setLoader] = React.useState(false)
-  const [postData, setPostData] = React.useState(null)
   let firebaseApp = React.useRef<unknown>()
   let db = React.useRef<any>()
-  const route = useRouter()
 
   const [preview, setPreview] = React.useState(false)
 
