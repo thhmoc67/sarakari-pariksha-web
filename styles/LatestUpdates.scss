@@ -6,41 +6,51 @@
     width: 25%;
     padding: 4px;
     font-size: 22px;
+    text-transform: capitalize;
     p {
       margin: 0;
       padding: 20px;
       text-align: center;
       font-weight: bold;
       color: rgb(255, 255, 255);
-      border-radius: 12px;
+      border-radius: 8px;
     }
   }
 
   .color-0 {
-    background-color: #191A19;
+    background-color: #191a19;
   }
   .color-1 {
-    background-color: #1E5128;
+    background-color: #1e5128;
   }
   .color-2 {
-    background-color: #4E9F3D;
+    background-color: #4e9f3d;
   }
   .color-3 {
     background-color: #150050;
   }
   .color-4 {
-    background-color: #5C527F;
+    background-color: #5c527f;
   }
   .color-5 {
     background-color: #950101;
   }
   .color-6 {
-    background-color: #FF4C29;
+    background-color: #b6c90b;
   }
   .color-7 {
     background-color: #290001;
   }
   .color-8 {
-    background-color: red;
+    background-color: rgb(255, 174, 0);
+  }
+  .color-9 {
+    background-color: rgb(37, 8, 139);
+  }
+  .color-10 {
+    background-color: rgb(187, 131, 11);
+  }
+  .color-11 {
+    background-color: rgb(6, 49, 189);
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 interface Update {
   title: string
+  link: string
 }
 interface List {
   list: Array<Update>
@@ -14,7 +15,9 @@ const LatestUpdates = ({list}: List) => {
           const color = 'color-' + index
           return (
             <div key={color} className={'card '}>
-              <p className={color}>{update.title}</p>
+              <a href={update.link} target="_blank" rel="noreferrer">
+                <p className={color}>{update.title} </p>
+              </a>
             </div>
           )
         })}

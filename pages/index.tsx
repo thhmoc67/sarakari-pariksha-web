@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Layout from '../components/Layout'
 import Home from '../containers/Home'
 import {initializeApp} from 'firebase/app'
-import {getFirestore} from 'firebase/firestore'
+import {getDoc, doc, getFirestore} from 'firebase/firestore'
 import {firebaseConfig} from '../config/firebase'
 import {collection, getDocs} from 'firebase/firestore'
 import {useEffect, useState} from 'react'
@@ -12,10 +12,22 @@ interface Props {}
 
 const App: NextPage<Props> = props => {
   const [results, setResults] = useState({})
+  const [latestUpdates, setLatestUpdates] = useState([])
+
+  async function getUpdates() {}
+
   async function getAllResults() {
     const firebaseApp = initializeApp(firebaseConfig)
     const db = getFirestore()
     const querySnapshot = await getDocs(collection(db, 'posts'))
+
+    const docRef = await doc(db, 'common', 'latest')
+    const docSnap = await getDoc(docRef)
+    if (docSnap?.exists()) {
+      const data = docSnap.data()
+      setLatestUpdates(data?.updates)
+    } else {
+    }
 
     const list: any = []
     querySnapshot.forEach(doc => {
@@ -55,7 +67,7 @@ const App: NextPage<Props> = props => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Home results={results} />
+        <Home results={results} updates={latestUpdates} />
       </Layout>
     </>
   )
