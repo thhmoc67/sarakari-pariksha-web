@@ -40,14 +40,24 @@ App.getInitialProps = async ({req}: any) => {
 
   return {
     results: {
-      latestjobs: list.filter((item: any) =>
-        item.tags?.includes('latest jobs'),
-      ),
-      results: list.filter((item: any) => item.tags?.includes('results')),
-      admincard: list.filter((item: any) => item.tags?.includes('admin card')),
-      answerkey: list.filter((item: any) => item.tags?.includes('answer key')),
-      syllabus: list.filter((item: any) => item.tags?.includes('syllabus')),
-      admission: list.filter((item: any) => item.tags?.includes('admission')),
+      latestjobs: list
+        .filter((item: any) => item.tags?.includes('latest jobs'))
+        .slice(0, 9),
+      results: list
+        .filter((item: any) => item.tags?.includes('results'))
+        .slice(0, 9),
+      admitcard: list
+        .filter((item: any) => item.tags?.includes('admit card'))
+        .slice(0, 9),
+      answerkey: list
+        .filter((item: any) => item.tags?.includes('answer key'))
+        .slice(0, 9),
+      syllabus: list
+        .filter((item: any) => item.tags?.includes('syllabus'))
+        .slice(0, 9),
+      admission: list
+        .filter((item: any) => item.tags?.includes('admission'))
+        .slice(0, 9),
     },
   }
 }

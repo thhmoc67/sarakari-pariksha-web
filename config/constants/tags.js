@@ -1,8 +1,8 @@
 export const tagsList = [
   'latest jobs',
   'results',
-  'admin card',
-  'anwer key',
+  'admit card',
+  'answer key',
   'syllabus',
   'admission',
 ]

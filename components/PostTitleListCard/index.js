@@ -1,5 +1,7 @@
 import {Link} from '@mui/material'
 import React from 'react'
+import newIcon from '../../assets/images/new-gif.jpeg'
+import Image from 'next/image'
 
 function PostTitleListCard({results}) {
   return (
@@ -14,7 +16,12 @@ function PostTitleListCard({results}) {
         {results?.map((result, index) => (
           <Link key={'sylabus' + index} href={'/post/' + result.id} passHref>
             <li style={{color: 'blue', cursor: 'pointer', marginTop: 16}}>
-              {result.title}
+              {result.title}{' '}
+              {!!item.isNew && (
+                <span>
+                  <Image src={newIcon} alt={'newicon'} width={25} height={30} />
+                </span>
+              )}
             </li>
           </Link>
         ))}

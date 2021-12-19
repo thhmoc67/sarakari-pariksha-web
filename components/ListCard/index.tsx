@@ -1,4 +1,6 @@
 import React from 'react'
+import newIcon from '../../assets/images/new-gif.jpeg'
+import Image from 'next/image'
 
 interface List {
   title: string
@@ -15,6 +17,11 @@ const ListCard = ({list = [], title, link}: ListProps) => {
     <li key={'item' + key} style={{color: 'blue'}}>
       <a href={'/post/' + item.id} target="_blank" rel="noreferrer">
         {item.title}
+        {!!item.isNew && (
+          <span>
+            <Image src={newIcon} alt={'newicon'} width={25} height={30} />
+          </span>
+        )}
       </a>
     </li>
   ))

@@ -46,7 +46,7 @@ AdmissionPage.getInitialProps = async ({req}: any) => {
 
     list.push({
       id: doc.id,
-      title: doc.data().title,
+      title: doc.data().post_name,
     })
   })
 
