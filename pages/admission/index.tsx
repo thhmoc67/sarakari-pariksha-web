@@ -2,55 +2,28 @@ import React from 'react'
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import Layout from '../../components/Layout'
-import {initializeApp} from 'firebase/app'
-import {getFirestore} from 'firebase/firestore'
-// import {collection, setDoc} from 'firebase/firestore'
-import {firebaseConfig} from '../../config/firebase'
-import {collection, query, where, getDocs} from 'firebase/firestore'
-import Link from 'next/link'
-import PostTitleListCard from '../../components/PostTitleListCard'
+import PostsList from '../../components/PostsList'
 
-interface Props {
-  results: any
-}
+interface Props {}
 
 const AdmissionPage: NextPage<Props> = props => {
   return (
     <>
       <Head>
-        <title>Sarkari Pariksha | Answer key</title>
+        <title>Sarkari Pariksha | Admissions</title>
         <meta name="description" content="Sarkari Pariksa" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
         <h1>Admission</h1>
-        <PostTitleListCard results={props?.results} />
+        <PostsList tag="admission" />
       </Layout>
     </>
   )
 }
 
 AdmissionPage.getInitialProps = async ({req}: any) => {
-  const firebaseApp = initializeApp(firebaseConfig)
-  const db = getFirestore()
-  const q = query(
-    collection(db, 'posts'),
-    where('tags', 'array-contains', 'admission'),
-  )
-
-  const querySnapshot = await getDocs(q)
-
-  const list: any = []
-  querySnapshot.forEach(doc => {
-    console.log(doc.id, ' => ', doc.data())
-
-    list.push({
-      id: doc.id,
-      title: doc.data().post_name,
-    })
-  })
-
-  return {results: list}
+  return {}
 }
 
 export default AdmissionPage

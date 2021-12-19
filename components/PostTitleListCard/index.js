@@ -14,16 +14,20 @@ function PostTitleListCard({results}) {
       }}>
       <ul>
         {results?.map((result, index) => (
-          <Link key={'sylabus' + index} href={'/post/' + result.id} passHref>
+          <a
+            key={'sylabus' + index}
+            href={'/post/' + result.id}
+            target="_blank"
+            rel="noreferrer">
             <li style={{color: 'blue', cursor: 'pointer', marginTop: 16}}>
               {result.title}{' '}
-              {!!item.isNew && (
+              {!!result.isNew && (
                 <span>
                   <Image src={newIcon} alt={'newicon'} width={25} height={30} />
                 </span>
               )}
             </li>
-          </Link>
+          </a>
         ))}
       </ul>
     </div>

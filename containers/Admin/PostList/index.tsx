@@ -27,7 +27,6 @@ const PostList: NextPage = () => {
     const list: any = []
     querySnapshot.forEach(doc => {
       list.push({...doc.data(), id: doc.id})
-      console.log(`${doc.id} => ${JSON.stringify(doc.data())}`)
     })
 
     setPostsList(list)

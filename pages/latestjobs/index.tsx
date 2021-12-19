@@ -2,17 +2,8 @@ import React from 'react'
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import Layout from '../../components/Layout'
-import {initializeApp} from 'firebase/app'
-import {getFirestore} from 'firebase/firestore'
-// import {collection, setDoc} from 'firebase/firestore'
-import {firebaseConfig} from '../../config/firebase'
-import {collection, query, where, getDocs} from 'firebase/firestore'
-import Link from 'next/link'
-import PostTitleListCard from '../../components/PostTitleListCard'
-
-interface Props {
-  results: any
-}
+import PostsList from '../../components/PostsList'
+interface Props {}
 
 const LatestJobs: NextPage<Props> = props => {
   return (
@@ -24,33 +15,14 @@ const LatestJobs: NextPage<Props> = props => {
       </Head>
       <Layout>
         <h1>Latest Jobs</h1>
-        <PostTitleListCard results={props?.results} />
+        <PostsList tag="latest jobs" />
       </Layout>
     </>
   )
 }
 
 LatestJobs.getInitialProps = async ({req}: any) => {
-  const firebaseApp = initializeApp(firebaseConfig)
-  const db = getFirestore()
-  const q = query(
-    collection(db, 'posts'),
-    where('tags', 'array-contains', 'latest jobs'),
-  )
-
-  const querySnapshot = await getDocs(q)
-
-  const list: any = []
-  querySnapshot.forEach(doc => {
-    console.log(doc.id, ' => ', doc.data())
-
-    list.push({
-      id: doc.id,
-      title: doc.data().post_name,
-    })
-  })
-
-  return {results: list}
+  return {}
 }
 
 export default LatestJobs
