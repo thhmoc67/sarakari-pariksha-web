@@ -16,7 +16,7 @@ const ListCard = ({list = [], title, link}: ListProps) => {
   const listItems = list.map((item: any, key: number) => (
     <li key={'item' + key} style={{color: 'blue'}}>
       <a href={'/post/' + item.id} target="_blank" rel="noreferrer">
-        {item.title}
+        {item.post_name}
         {!!item.isNew && (
           <span>
             <Image src={newIcon} alt={'newicon'} width={25} height={30} />

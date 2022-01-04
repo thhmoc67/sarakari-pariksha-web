@@ -36,6 +36,7 @@ export type Post = {
   qualification?: PostList[]
   qualification_notes?: string[]
   important_links?: LinkList[]
+  customData?: []
 }
 
 const PostPreview = ({data}: PostPreview) => {
@@ -46,15 +47,29 @@ const PostPreview = ({data}: PostPreview) => {
         {list?.map((date: PostList, index) => (
           <li key={'important_dates' + index}>
             {date.label} : {date.value}
-            <span>{date.note}</span>
+            <span style={{color: 'red'}}> {date.note}</span>
           </li>
         ))}
         {notes?.map((note, index) => (
-          <li key={'important_dates_notes' + index}>{note}</li>
+          <li key={'important_dates_notes' + index}> {note}</li>
         ))}
       </ul>
     </div>
   )
+
+  const CustomData = () => {
+    return (
+      <>
+        {data?.customData?.map((entryItem: any, index: number) => {
+          if (entryItem.type === 'table') {
+            return tableBody(entryItem.label, entryItem?.data, [])
+          } else if (entryItem.type === 'list') {
+            return tableBody(entryItem.label, [], entryItem?.data)
+          } else return null
+        })}
+      </>
+    )
+  }
 
   return (
     <div className="post-preview">
@@ -109,10 +124,11 @@ const PostPreview = ({data}: PostPreview) => {
         {(!!data?.qualification?.length ||
           !!data?.qualification_notes?.length) &&
           tableBody(
-            'Age Limit',
+            'Qualification',
             data?.qualification,
             data?.qualification_notes,
           )}
+        <CustomData />
       </div>
 
       {/* important_links */}
