@@ -25,7 +25,13 @@ const App: NextPage<Props> = props => {
     const docSnap = await getDoc(docRef)
     if (docSnap?.exists()) {
       const data = docSnap.data()
-      setLatestUpdates(data?.updates)
+      console.log( data?.updates
+        ?.sort((a, b) => b?.created_at?.seconds - a?.created_at?.seconds))
+      setLatestUpdates(
+        data?.updates
+          ?.sort((a, b) => b?.created_at?.seconds - a?.created_at?.seconds)
+          .slice(0, 8),
+      )
     } else {
     }
 

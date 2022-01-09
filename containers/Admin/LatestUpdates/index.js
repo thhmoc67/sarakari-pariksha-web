@@ -24,6 +24,7 @@ const LatestUpdates = () => {
         updates: latestUpdates.map(item => ({
           title: item.label,
           link: item.value,
+          created_at: item.created_at || new Date(),
         })),
       })
     } catch (e) {
@@ -50,6 +51,7 @@ const LatestUpdates = () => {
           data?.updates?.map(item => ({
             label: item.title,
             value: item.link,
+            created_at: item.created_at,
           })) || [],
         )
       } else {
@@ -90,11 +92,7 @@ const LatestUpdates = () => {
         updateForm={setLatestUpdates}
       />
 
-      <Modal
-        open={preview}
-        onClose={() => setPreview(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description">
+      <Modal disableScrollLock open={preview} onClose={() => setPreview(false)}>
         <Box sx={style}>
           <div style={{display: 'flex', justifyContent: 'flex-end'}}>
             <CloseIcon
@@ -125,6 +123,5 @@ const style = {
   bgcolor: 'background.paper',
   border: '1px solid #000',
   boxShadow: 24,
-  overflow: 'scroll',
   p: 4,
 }
