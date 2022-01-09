@@ -28,7 +28,9 @@ const App: NextPage<Props> = props => {
       const data = docSnap.data()
       setLatestUpdates(
         data?.updates
-          ?.sort((a, b) => b?.created_at?.seconds - a?.created_at?.seconds)
+          ?.sort(
+            (a: any, b: any) => b?.created_at?.seconds - a?.created_at?.seconds,
+          )
           .slice(0, 8),
       )
     } else {
@@ -39,7 +41,7 @@ const App: NextPage<Props> = props => {
     if (notificationSnap?.exists()) {
       const data = notificationSnap.data()
       notifications = data?.notifications?.sort(
-        (a, b) => b?.created_at?.seconds - a?.created_at?.seconds,
+        (a:any, b:any) => b?.created_at?.seconds - a?.created_at?.seconds,
       )
     } else {
       notifications = []
@@ -93,7 +95,6 @@ const App: NextPage<Props> = props => {
         <Home
           results={results}
           updates={latestUpdates}
-          notifications={results.notifications}
         />
       </Layout>
     </>

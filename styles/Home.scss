@@ -8,3 +8,16 @@
     }
   }
 }
+
+.PostTitleListCard {
+  padding: 12;
+  border-width: 2;
+  border-color: black;
+  border-style: solid;
+
+  li {
+    color: 'blue';
+    cursor: pointer;
+    margin-top: 16;
+  }
+}

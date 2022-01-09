@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Notifications = ({list = []}) => {
+
+const Notifications = ({ list = [] }) => {
   const length = list.length
   const allItems = () => {
     let arr = []
@@ -9,7 +10,7 @@ const Notifications = ({list = []}) => {
         <marquee behavior={'alternate'} key={'list' + i}>
           {list[i] && (
             <a
-              style={{color: 'blue', textDecoration: 'underline'}}
+              style={{ color: 'blue', textDecoration: 'underline' }}
               href={list[i]?.link}
               target="_blank"
               rel="noreferrer">
@@ -20,7 +21,7 @@ const Notifications = ({list = []}) => {
             <>
               {' | '}
               <a
-                style={{color: 'blue', textDecoration: 'underline'}}
+                style={{ color: 'blue', textDecoration: 'underline' }}
                 href={list[i]?.link}
                 target="_blank"
                 rel="noreferrer">
@@ -32,7 +33,7 @@ const Notifications = ({list = []}) => {
             <>
               {' | '}
               <a
-                style={{color: 'blue', textDecoration: 'underline'}}
+                style={{ color: 'blue', textDecoration: 'underline' }}
                 href={list[i]?.link}
                 target="_blank"
                 rel="noreferrer">
@@ -47,7 +48,7 @@ const Notifications = ({list = []}) => {
   }
 
   return (
-    <div style={{fontSize: 18, marginTop: 32, marginBottom: 32}}>
+    <div style={{ fontSize: 18, marginTop: 32, marginBottom: 32 }}>
       {allItems()}
     </div>
   )
