@@ -1,5 +1,6 @@
 import React from 'react'
 import LatestUpdates from '../../components/LatestUpdates'
+import Notifications from '../../components/Notifications'
 import ListCard from '../../components/ListCard'
 import {tagsList} from '../../config/constants/tags'
 import {examList, updateList} from './constants'
@@ -7,6 +8,7 @@ import {examList, updateList} from './constants'
 const Home = ({results, updates}: any) => {
   return (
     <div className="home-container ">
+      <Notifications list={results.notifications} />
       <LatestUpdates list={updates} />
       <div className="flex-row cards">
         <ListCard

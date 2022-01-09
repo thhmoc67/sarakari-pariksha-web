@@ -14,6 +14,11 @@ export const adminMenulist = [
     route: '/admin/latest',
     key: 'latest',
   },
+  {
+    label: 'Notifications',
+    route: '/admin/notification',
+    key: 'notification',
+  },
   // {
   //   label: 'Home',
   //   route: '/admin',

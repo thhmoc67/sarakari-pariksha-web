@@ -20,13 +20,12 @@ const App: NextPage<Props> = props => {
     const firebaseApp = initializeApp(firebaseConfig)
     const db = getFirestore()
     const querySnapshot = await getDocs(collection(db, 'posts'))
+    let notifications
 
     const docRef = await doc(db, 'common', 'latest')
     const docSnap = await getDoc(docRef)
     if (docSnap?.exists()) {
       const data = docSnap.data()
-      console.log( data?.updates
-        ?.sort((a, b) => b?.created_at?.seconds - a?.created_at?.seconds))
       setLatestUpdates(
         data?.updates
           ?.sort((a, b) => b?.created_at?.seconds - a?.created_at?.seconds)
@@ -35,11 +34,23 @@ const App: NextPage<Props> = props => {
     } else {
     }
 
+    const notificationRef = await doc(db, 'common', 'notifications')
+    const notificationSnap = await getDoc(notificationRef)
+    if (notificationSnap?.exists()) {
+      const data = notificationSnap.data()
+      notifications = data?.notifications?.sort(
+        (a, b) => b?.created_at?.seconds - a?.created_at?.seconds,
+      )
+    } else {
+      notifications = []
+    }
+
     const list: any = []
     querySnapshot.forEach(doc => {
       list.push({...doc.data(), id: doc.id})
     })
     const results: any = {
+      notifications,
       latestjobs: list
         .filter((item: any) => item.tags?.includes('latest jobs'))
         .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
@@ -79,7 +90,11 @@ const App: NextPage<Props> = props => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <Home results={results} updates={latestUpdates} />
+        <Home
+          results={results}
+          updates={latestUpdates}
+          notifications={results.notifications}
+        />
       </Layout>
     </>
   )
