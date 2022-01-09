@@ -94,9 +94,11 @@ const PostEdit: NextPage = () => {
       const docSnap = await getDoc(docRef)
 
       if (docSnap?.exists()) {
-        console.log('Document data:', docSnap.data())
         const data = docSnap.data()
-        setForm({...postInitalState, ...data})
+        setForm({
+          ...postInitalState,
+          ...data,
+        })
       } else {
         // doc.data() will be undefined in this case
         console.log('No such document!')

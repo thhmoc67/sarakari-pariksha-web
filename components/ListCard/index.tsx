@@ -17,11 +17,14 @@ const ListCard = ({list = [], title, link}: ListProps) => {
     <li key={'item' + key} style={{color: 'blue'}}>
       <a href={'/post/' + item.id} target="_blank" rel="noreferrer">
         {item.post_name}
-        {!!item.isNew && (
-          <span>
-            <Image src={newIcon} alt={'newicon'} width={25} height={30} />
-          </span>
-        )}
+        {!!item.created_at &&
+          new Date().getTime() <
+            new Date(item.created_at.seconds * 1000).getTime() +
+              10 * 1000 * 60 * 60 * 24 && (
+            <span>
+              <Image src={newIcon} alt={'newicon'} width={25} height={30} />
+            </span>
+          )}
       </a>
     </li>
   ))

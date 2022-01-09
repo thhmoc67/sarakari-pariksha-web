@@ -1,20 +1,25 @@
 .list {
   list-style: none;
-  background-color: antiquewhite;
+  color: white;
+  background-color: rgb(0, 0, 0);
   width: 100%;
   padding: 12px;
   text-align: center;
   cursor: pointer;
+  z-index: 1;
 }
 
 .list:hover {
-  background-color: #eee;
+  background-color: rgb(51, 51, 51);
 }
 
 .ul {
   display: flex;
   justify-content: space-around;
-  padding-inline-start: 0px;
+  padding-inline-start: 1.5px;
+  margin-block-start: -10px;
+  /* margin-block-end: 0em; */
+  width: 1022px;
 }
 
 .wrapper {

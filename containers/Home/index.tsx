@@ -10,15 +10,16 @@ const Home = ({results, updates}: any) => {
       <LatestUpdates list={updates} />
       <div className="flex-row cards">
         <ListCard
-          title="Latest Jobs"
-          list={results?.latestjobs}
-          link="/latestjobs"
-        />
-        <ListCard title="Result" list={results?.results} link="/results" />
-        <ListCard
           title="Admit Card"
           list={results?.admitcard}
           link="/admitcard"
+        />
+        <ListCard title="Result" list={results?.results} link="/results" />
+
+        <ListCard
+          title="Latest Jobs"
+          list={results?.latestjobs}
+          link="/latestjobs"
         />
         <ListCard
           title="Answer Key"

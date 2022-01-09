@@ -19,13 +19,22 @@ function PostTitleListCard({results}) {
             href={'/post/' + result.id}
             target="_blank"
             rel="noreferrer">
+            {console.log(result)}
             <li style={{color: 'blue', cursor: 'pointer', marginTop: 16}}>
-              {result.title}{' '}
-              {!!result.isNew && (
-                <span>
-                  <Image src={newIcon} alt={'newicon'} width={25} height={30} />
-                </span>
-              )}
+              {result.title}
+              {!!result.created_at &&
+                new Date().getTime() <
+                  (new Date(result.created_at.seconds * 1000).getTime() +
+                    10 * 1000 * 60 * 60 * 24) && (
+                  <span>
+                    <Image
+                      src={newIcon}
+                      alt={'newicon'}
+                      width={25}
+                      height={30}
+                    />
+                  </span>
+                )}
             </li>
           </a>
         ))}

@@ -25,9 +25,10 @@ const AnswerkeyPage = props => {
         id: doc.id,
         title: data.post_name,
         isNew: data.isNew,
+        created_at: data.created_at,
       })
     })
-    setResults(list)
+    setResults(list.sort((a, b) => b.created_at.seconds - a.created_at.seconds))
   }
 
   React.useEffect(() => {

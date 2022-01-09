@@ -36,21 +36,27 @@ const App: NextPage<Props> = props => {
     const results: any = {
       latestjobs: list
         .filter((item: any) => item.tags?.includes('latest jobs'))
+        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
         .slice(0, 9),
       results: list
         .filter((item: any) => item.tags?.includes('results'))
+        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
         .slice(0, 9),
       admitcard: list
         .filter((item: any) => item.tags?.includes('admit card'))
+        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
         .slice(0, 9),
       answerkey: list
         .filter((item: any) => item.tags?.includes('answer key'))
+        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
         .slice(0, 9),
       syllabus: list
         .filter((item: any) => item.tags?.includes('syllabus'))
+        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
         .slice(0, 9),
       admission: list
         .filter((item: any) => item.tags?.includes('admission'))
+        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
         .slice(0, 9),
     }
     setResults(results)
