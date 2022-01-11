@@ -16,6 +16,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import PostPreview from '../../../components/PostPreview'
 import Tags from './Tags'
 import NewPost from './NewPost'
+import CustomTable from './CustomTable'
 
 const PostEdit: NextPage = () => {
   const [form, setForm] = React.useState<any>(null)
@@ -185,6 +186,18 @@ const PostEdit: NextPage = () => {
               return (
                 <Card style={{padding: 12, marginBottom: 12}}>
                   <AddData
+                    data={entryItem.data}
+                    title={entryItem.label}
+                    updateForm={(data: any) =>
+                      updateFormCustomData(data, index)
+                    }
+                  />
+                </Card>
+              )
+            } else if (entryItem.type === 'customtable') {
+              return (
+                <Card style={{padding: 12, marginBottom: 12}}>
+                  <CustomTable
                     data={entryItem.data}
                     title={entryItem.label}
                     updateForm={(data: any) =>

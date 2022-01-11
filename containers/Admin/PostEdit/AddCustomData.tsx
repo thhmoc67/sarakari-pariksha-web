@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 import ViewCompactIcon from '@mui/icons-material/ViewCompact'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
+import TableViewIcon from '@mui/icons-material/TableView';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -103,6 +104,23 @@ const CustomItemModal = ({handleClose, addCustomData}: any) => {
               onClick={() => setType('list')}
             />
             <div>List</div>
+          </Grid>
+          <Grid
+            item
+            md={5}
+            style={{
+              textAlign: 'center',
+            }}>
+            <TableViewIcon
+              style={{
+                borderRadius: 8,
+                border: type === 'customtable' ? '2px solid #aaa' : 0,
+                fontSize: 100,
+                color: '#aaa',
+              }}
+              onClick={() => setType('customtable')}
+            />
+            <div>Custom Table</div>
           </Grid>
           {type && (
             <Grid item md={12}>
