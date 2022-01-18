@@ -50,11 +50,15 @@ const style = {
 
 const TableModal = ({open = false, title = '', handleClose}) => {
   const [data, setData] = useState([])
-
   const [rowVal, setRow] = useState(0)
 
+  function closeModal() {
+    handleClose()
+    setData([])
+  }
+
   function addInfo() {
-    setData([[{text: 'enter', rowSpan: 1, colSpan: 1}]])
+    setData([[{text: '', rowSpan: 1, colSpan: 1}]])
   }
 
   function updateData() {}
@@ -73,17 +77,14 @@ const TableModal = ({open = false, title = '', handleClose}) => {
 
   function addColumn() {
     let newData = data
-    newData = [...data, [{id: 3, text: 'Jill', rowSpan: 1, colSpan: 1}]]
+    newData = [...data, [{id: 3, text: '', rowSpan: 1, colSpan: 1}]]
     setData(newData)
     setRow(rowVal + 1)
   }
 
   function addRow(col) {
     let newData = data
-    newData[col] = [
-      ...newData[col],
-      {text: '43', rowSpan: 1, colSpan: 1},
-    ]
+    newData[col] = [...newData[col], {text: '', rowSpan: 1, colSpan: 1}]
     setData(newData)
     setRow(rowVal + 1)
   }
@@ -103,10 +104,9 @@ const TableModal = ({open = false, title = '', handleClose}) => {
     setRow(rowVal + 1)
   }
 
-  console.log(data)
-
+  let maxCol = 0
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={open} onClose={closeModal}>
       <Box sx={style}>
         <Typography variant="h5" component="h1" marginBottom={2}>
           {title}
@@ -122,59 +122,77 @@ const TableModal = ({open = false, title = '', handleClose}) => {
 
         <Grid container spacing={3} marginBottom={1}>
           <Grid item md={12}>
-            <table style={{width: '100%'}}>
-              {data.map((colItem, i) => {
-                const ItemDetail = ({item, j}) => (
-                  <div style={{position: 'relative'}}>
-                    <textarea
-                      defaultValue={item.text}
-                      style={{width: '100%', height: 60}}
-                      onChange={e =>
-                        handleOnChange(i, j, e.target.value, 'text')
-                      }
-                    />
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: 5,
-                        right: 5,
-                        display: 'flex',
-                      }}>
-                      <span
-                        onClick={() =>
-                          handleOnChange(i, j, item.colSpan - 1, 'colSpan')
-                        }
-                        style={{color: 'grey', cursor: 'pointer'}}>
-                        <ArrowLeftIcon />
-                      </span>
-                      <span
-                        onClick={() =>
-                          handleOnChange(i, j, item.colSpan + 1, 'colSpan')
-                        }
-                        style={{color: 'grey', cursor: 'pointer'}}>
-                        <ArrowRightIcon />
-                      </span>
-                      <span
-                        onClick={() =>
-                          handleOnChange(i, j, item.rowSpan + 1, 'rowSpan')
-                        }
-                        style={{color: 'grey', cursor: 'pointer'}}>
-                        <ArrowDropDownIcon />
-                      </span>
-                      <span
-                        onClick={() =>
-                          handleOnChange(i, j, item.rowSpan - 1, 'rowSpan')
-                        }
-                        style={{color: 'grey', cursor: 'pointer'}}>
-                        <ArrowDropUpIcon />
-                      </span>
-                      <span
-                        onClick={() => removeItem(i, j)}
-                        style={{color: 'grey', cursor: 'pointer'}}>
-                        <DeleteIcon style={{fontSize: 12}} />
-                      </span>
-                    </div>
-                    {/* {0 === j && (
+            <div className="table">
+              <table style={{width: '100%'}}>
+                {data.map((colItem, i) => {
+                  const ItemDetail = ({item, j}) => {
+                    const disabledArrowLeft = item.colSpan === 1
+                    const disabledArrowRight =
+                      maxCol + 1 === colItem.length + item.colSpan - 1
+                    const disabledArrowDropDown =
+                      item.rowSpan === data.length - i
+                    const disabledArrowDropUp = item.rowSpan === 1
+                    return (
+                      <div className="table-element">
+                        <textarea
+                          placeholder='enter something'
+                          defaultValue={item.text}
+                          onChange={e =>
+                            handleOnChange(i, j, e.target.value, 'text')
+                          }
+                        />
+                        <div className="btn-list">
+                          <span
+                            onClick={() =>
+                              !disabledArrowLeft &&
+                              handleOnChange(i, j, item.colSpan - 1, 'colSpan')
+                            }
+                            style={{
+                              color: disabledArrowLeft ? '#eee' : 'grey',
+                              cursor: 'pointer',
+                            }}>
+                            <ArrowLeftIcon />
+                          </span>
+                          <span
+                            onClick={() =>
+                              !disabledArrowRight &&
+                              handleOnChange(i, j, item.colSpan + 1, 'colSpan')
+                            }
+                            style={{
+                              color: disabledArrowRight ? '#eee' : 'grey',
+                              cursor: 'pointer',
+                            }}>
+                            <ArrowRightIcon />
+                          </span>
+                          <span
+                            onClick={() =>
+                              !disabledArrowDropDown &&
+                              handleOnChange(i, j, item.rowSpan + 1, 'rowSpan')
+                            }
+                            style={{
+                              color: disabledArrowDropDown ? '#eee' : 'grey',
+                              cursor: 'pointer',
+                            }}>
+                            <ArrowDropDownIcon />
+                          </span>
+                          <span
+                            onClick={() =>
+                              !disabledArrowDropUp &&
+                              handleOnChange(i, j, item.rowSpan - 1, 'rowSpan')
+                            }
+                            style={{
+                              color: disabledArrowDropUp ? '#eee' : 'grey',
+                              cursor: 'pointer',
+                            }}>
+                            <ArrowDropUpIcon />
+                          </span>
+                          <span
+                            onClick={() => removeItem(i, j)}
+                            style={{color: 'grey', cursor: 'pointer'}}>
+                            <DeleteIcon style={{fontSize: 12}} />
+                          </span>
+                        </div>
+                        {/* {0 === j && (
                       <span
                         onClick={() => removeItem(i, j)}
                         style={{
@@ -187,68 +205,76 @@ const TableModal = ({open = false, title = '', handleClose}) => {
                       </span>
                     )} */}
 
-                    {colItem.length - 1 === j && (
-                      <span
-                        onClick={() => addRow(i)}
-                        style={{
-                          position: 'absolute',
-                          right: -15,
-                          color: 'grey',
-                          cursor: 'pointer',
-                        }}>
-                        +
-                      </span>
-                    )}
-                  </div>
-                )
-                if (i === 0) {
-                  return (
-                    <tr>
-                      {colItem.map((item, j) => (
-                        // eslint-disable-next-line react/jsx-key
-                        <th rowSpan={item.rowSpan} colSpan={item.colSpan}>
-                          <ItemDetail item={item} j={j} />
+                        {colItem.length - 1 === j && (
+                          <span
+                            onClick={() => addRow(i)}
+                            style={{
+                              position: 'absolute',
+                              right: -15,
+                              color: 'red',
+                              cursor: 'pointer',
+                            }}>
+                            +
+                          </span>
+                        )}
+                      </div>
+                    )
+                  }
+                  if (i === 0) {
+                    return (
+                      <tr>
+                        {colItem.map((item, j) => {
+                          if (maxCol < j) maxCol = j
+                          return (
+                            // eslint-disable-next-line react/jsx-key
+                            <th rowSpan={item.rowSpan} colSpan={item.colSpan}>
+                              <ItemDetail item={item} j={j} />
 
-                          {0 === i && 0 === j && (
-                            <span
-                              onClick={() => addColumn()}
-                              style={{
-                                position: 'absolute',
-                                left: 50,
-                                bottom: 85,
-                                color: 'grey',
-                                cursor: 'pointer',
-                              }}>
-                              +
-                            </span>
-                          )}
-                        </th>
-                      ))}
+                              {0 === i && 0 === j && (
+                                <span
+                                  onClick={() => addColumn()}
+                                  style={{
+                                    position: 'absolute',
+                                    left: 50,
+                                    bottom: 85,
+                                    color: 'red',
+                                    cursor: 'pointer',
+                                  }}>
+                                  +
+                                </span>
+                              )}
+                            </th>
+                          )
+                        })}
+                      </tr>
+                    )
+                  }
+                  return (
+                    // eslint-disable-next-line react/jsx-key
+                    <tr>
+                      {colItem.map((item, j) => {
+                        if (maxCol < j) maxCol = j
+                        return (
+                          // eslint-disable-next-line react/jsx-key
+                          <>
+                            <td rowSpan={item.rowSpan} colSpan={item.colSpan}>
+                              <ItemDetail item={item} j={j} />
+                            </td>
+                          </>
+                        )
+                      })}
                     </tr>
                   )
-                }
-                return (
-                  // eslint-disable-next-line react/jsx-key
-                  <tr>
-                    {colItem.map((item, j) => (
-                      // eslint-disable-next-line react/jsx-key
-                      <>
-                        <td rowSpan={item.rowSpan} colSpan={item.colSpan}>
-                          <ItemDetail item={item} j={j} />
-                        </td>
-                      </>
-                    ))}
-                  </tr>
-                )
-              })}
-            </table>
+                })}
+              </table>
+            </div>
           </Grid>
         </Grid>
         <br />
         <br />
         <>
           <Button
-            onClick={e => handleClose()}
+            onClick={closeModal}
             variant={'outlined'}
             style={{marginRight: 12}}>
             Cancel
