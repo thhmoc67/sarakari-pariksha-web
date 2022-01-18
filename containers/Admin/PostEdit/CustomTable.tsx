@@ -10,8 +10,9 @@ import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import DeleteIcon from '@mui/icons-material/Delete'
+import {AnyNaptrRecord} from 'node:dns'
 
-const CustomTable = ({title, data}) => {
+const CustomTable = ({title, data, updateForm}) => {
   const [openModal, setOpenModal] = useState(false)
   function handleOpen() {
     setOpenModal(true)
@@ -27,7 +28,15 @@ const CustomTable = ({title, data}) => {
           {title}
         </Button>
         <CustomTablePreview />
-        <TableModal open={openModal} handleClose={handleClose} />
+        {openModal && (
+          <TableModal
+            title={title}
+            open={openModal}
+            handleClose={handleClose}
+            info={data}
+            updateForm={updateForm}
+          />
+        )}
       </Grid>
     </Grid>
   )
@@ -48,8 +57,14 @@ const style = {
   overflow: 'scroll',
 }
 
-const TableModal = ({open = false, title = '', handleClose}) => {
-  const [data, setData] = useState([])
+const TableModal = ({
+  open = false,
+  title = '',
+  handleClose,
+  info,
+  updateForm,
+}) => {
+  const [data, setData] = useState(info ? JSON.parse(info) : [])
   const [rowVal, setRow] = useState(0)
 
   function closeModal() {
@@ -61,7 +76,16 @@ const TableModal = ({open = false, title = '', handleClose}) => {
     setData([[{text: '', rowSpan: 1, colSpan: 1}]])
   }
 
-  function updateData() {}
+  function updateData() {
+    updateForm(JSON.stringify(data))
+    closeModal()
+  }
+
+  function handleTextChange(col, row, value, attr) {
+    let newData = data
+    newData[col][row][attr] = value
+    setData(newData)
+  }
 
   function handleOnChange(col, row, value, attr) {
     console.log(col, row, value, attr)
@@ -105,6 +129,7 @@ const TableModal = ({open = false, title = '', handleClose}) => {
   }
 
   let maxCol = 0
+
   return (
     <Modal open={open} onClose={closeModal}>
       <Box sx={style}>
@@ -124,148 +149,80 @@ const TableModal = ({open = false, title = '', handleClose}) => {
           <Grid item md={12}>
             <div className="table">
               <table style={{width: '100%'}}>
-                {data.map((colItem, i) => {
-                  const ItemDetail = ({item, j}) => {
-                    const disabledArrowLeft = item.colSpan === 1
-                    const disabledArrowRight =
-                      maxCol + 1 === colItem.length + item.colSpan - 1
-                    const disabledArrowDropDown =
-                      item.rowSpan === data.length - i
-                    const disabledArrowDropUp = item.rowSpan === 1
-                    return (
-                      <div className="table-element">
-                        <textarea
-                          placeholder='enter something'
-                          defaultValue={item.text}
-                          onChange={e =>
-                            handleOnChange(i, j, e.target.value, 'text')
-                          }
-                        />
-                        <div className="btn-list">
-                          <span
-                            onClick={() =>
-                              !disabledArrowLeft &&
-                              handleOnChange(i, j, item.colSpan - 1, 'colSpan')
-                            }
-                            style={{
-                              color: disabledArrowLeft ? '#eee' : 'grey',
-                              cursor: 'pointer',
-                            }}>
-                            <ArrowLeftIcon />
-                          </span>
-                          <span
-                            onClick={() =>
-                              !disabledArrowRight &&
-                              handleOnChange(i, j, item.colSpan + 1, 'colSpan')
-                            }
-                            style={{
-                              color: disabledArrowRight ? '#eee' : 'grey',
-                              cursor: 'pointer',
-                            }}>
-                            <ArrowRightIcon />
-                          </span>
-                          <span
-                            onClick={() =>
-                              !disabledArrowDropDown &&
-                              handleOnChange(i, j, item.rowSpan + 1, 'rowSpan')
-                            }
-                            style={{
-                              color: disabledArrowDropDown ? '#eee' : 'grey',
-                              cursor: 'pointer',
-                            }}>
-                            <ArrowDropDownIcon />
-                          </span>
-                          <span
-                            onClick={() =>
-                              !disabledArrowDropUp &&
-                              handleOnChange(i, j, item.rowSpan - 1, 'rowSpan')
-                            }
-                            style={{
-                              color: disabledArrowDropUp ? '#eee' : 'grey',
-                              cursor: 'pointer',
-                            }}>
-                            <ArrowDropUpIcon />
-                          </span>
-                          <span
-                            onClick={() => removeItem(i, j)}
-                            style={{color: 'grey', cursor: 'pointer'}}>
-                            <DeleteIcon style={{fontSize: 12}} />
-                          </span>
-                        </div>
-                        {/* {0 === j && (
-                      <span
-                        onClick={() => removeItem(i, j)}
-                        style={{
-                          position: 'absolute',
-                          left: -15,
-                          color: 'grey',
-                          cursor: 'pointer',
-                        }}>
-                        -
-                      </span>
-                    )} */}
+                {!!data?.length && (
+                  <thead>
+                    <tr>
+                      {data[0].map((item, j) => {
+                        if (maxCol < j) maxCol = j
+                        return (
+                          // eslint-disable-next-line react/jsx-key
+                          <th rowSpan={item.rowSpan} colSpan={item.colSpan}>
+                            <ItemDetail
+                              colItem={data[0]}
+                              item={item}
+                              j={j}
+                              i={0}
+                              maxCol={maxCol}
+                              handleTextChange={handleTextChange}
+                              handleOnChange={handleOnChange}
+                              removeItem={removeItem}
+                              addRow={addRow}
+                              data={data}
+                            />
 
-                        {colItem.length - 1 === j && (
-                          <span
-                            onClick={() => addRow(i)}
-                            style={{
-                              position: 'absolute',
-                              right: -15,
-                              color: 'red',
-                              cursor: 'pointer',
-                            }}>
-                            +
-                          </span>
-                        )}
-                      </div>
-                    )
-                  }
-                  if (i === 0) {
+                            {0 === j && (
+                              <span
+                                onClick={() => addColumn()}
+                                style={{
+                                  position: 'absolute',
+                                  left: 50,
+                                  bottom: 85,
+                                  color: 'red',
+                                  cursor: 'pointer',
+                                }}>
+                                +
+                              </span>
+                            )}
+                          </th>
+                        )
+                      })}
+                    </tr>
+                  </thead>
+                )}
+                <tbody>
+                  {data.map((colItem, i) => {
+                    if (i === 0) {
+                      return null
+                    }
                     return (
+                      // eslint-disable-next-line react/jsx-key
                       <tr>
                         {colItem.map((item, j) => {
                           if (maxCol < j) maxCol = j
                           return (
                             // eslint-disable-next-line react/jsx-key
-                            <th rowSpan={item.rowSpan} colSpan={item.colSpan}>
-                              <ItemDetail item={item} j={j} />
-
-                              {0 === i && 0 === j && (
-                                <span
-                                  onClick={() => addColumn()}
-                                  style={{
-                                    position: 'absolute',
-                                    left: 50,
-                                    bottom: 85,
-                                    color: 'red',
-                                    cursor: 'pointer',
-                                  }}>
-                                  +
-                                </span>
-                              )}
-                            </th>
+                            <>
+                              <td rowSpan={item.rowSpan} colSpan={item.colSpan}>
+                                <ItemDetail
+                                  colItem={colItem}
+                                  item={item}
+                                  j={j}
+                                  i={i}
+                                  maxCol={maxCol}
+                                  handleTextChange={handleTextChange}
+                                  handleOnChange={handleOnChange}
+                                  removeItem={removeItem}
+                                  addRow={addRow}
+                                  data={data}
+                                />
+                              </td>
+                            </>
                           )
                         })}
                       </tr>
                     )
-                  }
-                  return (
-                    // eslint-disable-next-line react/jsx-key
-                    <tr>
-                      {colItem.map((item, j) => {
-                        if (maxCol < j) maxCol = j
-                        return (
-                          // eslint-disable-next-line react/jsx-key
-                          <>
-                            <td rowSpan={item.rowSpan} colSpan={item.colSpan}>
-                              <ItemDetail item={item} j={j} />
-                            </td>
-                          </>
-                        )
-                      })}
-                    </tr>
-                  )
-                })}
+                  })}
+                </tbody>
               </table>
             </div>
           </Grid>
@@ -280,11 +237,114 @@ const TableModal = ({open = false, title = '', handleClose}) => {
             Cancel
           </Button>
 
-          <Button onClick={() => updateData(formData)} variant="contained">
+          <Button onClick={() => updateData()} variant="contained">
             Submit
           </Button>
         </>
       </Box>
     </Modal>
+  )
+}
+
+const ItemDetail = ({
+  colItem,
+  item,
+  j,
+  i,
+  maxCol,
+  handleTextChange,
+  handleOnChange,
+  removeItem,
+  addRow,
+  data,
+}: any) => {
+  const disabledArrowLeft = item.colSpan === 1
+  const disabledArrowRight = maxCol + 1 === colItem.length + item.colSpan - 1
+  const disabledArrowDropDown = item.rowSpan === data.length - i
+  const disabledArrowDropUp = item.rowSpan === 1
+  return (
+    <div className="table-element">
+      <textarea
+        placeholder="enter something"
+        defaultValue={item.text}
+        onChange={e => handleTextChange(i, j, e.target.value, 'text')}
+      />
+      <div className="btn-list">
+        <span
+          onClick={() =>
+            !disabledArrowLeft &&
+            handleOnChange(i, j, item.colSpan - 1, 'colSpan')
+          }
+          style={{
+            color: disabledArrowLeft ? '#eee' : 'grey',
+            cursor: 'pointer',
+          }}>
+          <ArrowLeftIcon />
+        </span>
+        <span
+          onClick={() =>
+            !disabledArrowRight &&
+            handleOnChange(i, j, item.colSpan + 1, 'colSpan')
+          }
+          style={{
+            color: disabledArrowRight ? '#eee' : 'grey',
+            cursor: 'pointer',
+          }}>
+          <ArrowRightIcon />
+        </span>
+        <span
+          onClick={() =>
+            !disabledArrowDropDown &&
+            handleOnChange(i, j, item.rowSpan + 1, 'rowSpan')
+          }
+          style={{
+            color: disabledArrowDropDown ? '#eee' : 'grey',
+            cursor: 'pointer',
+          }}>
+          <ArrowDropDownIcon />
+        </span>
+        <span
+          onClick={() =>
+            !disabledArrowDropUp &&
+            handleOnChange(i, j, item.rowSpan - 1, 'rowSpan')
+          }
+          style={{
+            color: disabledArrowDropUp ? '#eee' : 'grey',
+            cursor: 'pointer',
+          }}>
+          <ArrowDropUpIcon />
+        </span>
+        <span
+          onClick={() => removeItem(i, j)}
+          style={{color: 'grey', cursor: 'pointer'}}>
+          <DeleteIcon style={{fontSize: 12}} />
+        </span>
+      </div>
+      {/* {0 === j && (
+    <span
+      onClick={() => removeItem(i, j)}
+      style={{
+        position: 'absolute',
+        left: -15,
+        color: 'grey',
+        cursor: 'pointer',
+      }}>
+      -
+    </span>
+  )} */}
+
+      {colItem.length - 1 === j && (
+        <span
+          onClick={() => addRow(i)}
+          style={{
+            position: 'absolute',
+            right: -15,
+            color: 'red',
+            cursor: 'pointer',
+          }}>
+          +
+        </span>
+      )}
+    </div>
   )
 }

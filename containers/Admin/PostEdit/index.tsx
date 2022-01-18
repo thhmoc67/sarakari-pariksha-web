@@ -48,7 +48,10 @@ const PostEdit: NextPage = () => {
   function addCustomData(type: string, label: string) {
     setForm({
       ...form,
-      customData: [...form.customData, {type, label, data: []}],
+      customData: [
+        ...form.customData,
+        {type, label, data: type === 'customtable' ? null : []},
+      ],
     })
   }
 
@@ -116,7 +119,7 @@ const PostEdit: NextPage = () => {
 
   if (!form) return null
   return (
-    <div className='post-admin-edit'>
+    <div className="post-admin-edit">
       <Grid container spacing={2}>
         <Grid item md={9} marginTop={2}>
           <Tags form={form} updateForm={updateForm} />

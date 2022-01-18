@@ -1,4 +1,5 @@
 import React from 'react'
+import CustomTablePreview from '../CustomTablePreview'
 
 export type PostPreview = {
   data: Post
@@ -65,6 +66,13 @@ const PostPreview = ({data}: PostPreview) => {
             return tableBody(entryItem.label, entryItem?.data, [])
           } else if (entryItem.type === 'list') {
             return tableBody(entryItem.label, [], entryItem?.data)
+          } else if (entryItem.type === 'customtable') {
+            return (
+              <CustomTablePreview
+                title={entryItem.label}
+                data={entryItem?.data ? JSON.parse(entryItem.data) : []}
+              />
+            )
           } else return null
         })}
       </>
@@ -132,24 +140,27 @@ const PostPreview = ({data}: PostPreview) => {
       </div>
 
       {/* important_links */}
-      <div className="post-table-links">
-        {data?.important_links?.map((item, index) => (
-          <div className="link-item" key={'date' + index}>
-            <h5>{item.label}</h5>
-            <h6>
-              {item.links?.map((link, i) => (
-                <a
-                  key={'imp_link' + i}
-                  href={link.url}
-                  target="_blank"
-                  rel="noreferrer">
-                  {link.label}
-                </a>
-              ))}
-            </h6>
-          </div>
-        ))}
-      </div>
+      {!!data?.important_links?.length && (
+        <div className="post-table-links ">
+          <h1>Some Useful important links</h1>
+          {data?.important_links?.map((item, index) => (
+            <div className="link-item" key={'date' + index}>
+              <h5>{item.label}</h5>
+              <h6>
+                {item.links?.map((link, i) => (
+                  <a
+                    key={'imp_link' + i}
+                    href={link.url}
+                    target="_blank"
+                    rel="noreferrer">
+                    {link.label}
+                  </a>
+                ))}
+              </h6>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

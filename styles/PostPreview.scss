@@ -1,5 +1,18 @@
 .post-preview {
   max-width: 1024px;
+
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+
   .post-common-data {
     .name-item {
       display: flex;
@@ -50,12 +63,21 @@
     }
 
     h1 {
+      margin-top: -2px;
       color: $green;
       text-align: center;
     }
   }
 
   .post-table-links {
+    h1 {
+      margin: 0;
+      margin-top: -2px;
+      padding: 18px;
+      border: 2px solid $black;
+      color: $green;
+      text-align: center;
+    }
     .link-item {
       display: flex;
       align-items: center;
@@ -70,6 +92,7 @@
         font-size: large;
         margin: 0;
         margin-top: -2px;
+        border-collapse: collapse;
       }
 
       h5 {

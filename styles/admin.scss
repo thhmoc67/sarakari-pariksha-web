@@ -38,7 +38,7 @@
 .table {
   .table-element {
     position: relative;
-    display: initial;
+    display: block;
   }
 
   table,
@@ -47,6 +47,7 @@
     border: 1px solid black;
     border-collapse: collapse;
   }
+
   textarea {
     border: 0;
     width: 100%;
@@ -57,7 +58,7 @@
     height: 50px;
     .btn-list {
       position: absolute;
-      top: -12px;
+      top: 0px;
       right: 5px;
       display: none;
     }
