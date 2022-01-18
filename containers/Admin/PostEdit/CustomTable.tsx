@@ -12,7 +12,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import DeleteIcon from '@mui/icons-material/Delete'
 import {AnyNaptrRecord} from 'node:dns'
 
-const CustomTable = ({title, data, updateForm}) => {
+const CustomTable = ({title, data, updateForm}: any) => {
   const [openModal, setOpenModal] = useState(false)
   function handleOpen() {
     setOpenModal(true)
@@ -27,7 +27,7 @@ const CustomTable = ({title, data, updateForm}) => {
         <Button onClick={handleOpen} startIcon={<TableViewIcon />}>
           {title}
         </Button>
-        <CustomTablePreview />
+        {/* <CustomTablePreview /> */}
         {openModal && (
           <TableModal
             title={title}
@@ -63,7 +63,7 @@ const TableModal = ({
   handleClose,
   info,
   updateForm,
-}) => {
+}: any) => {
   const [data, setData] = useState(info ? JSON.parse(info) : [])
   const [rowVal, setRow] = useState(0)
 
@@ -81,13 +81,23 @@ const TableModal = ({
     closeModal()
   }
 
-  function handleTextChange(col, row, value, attr) {
+  function handleTextChange(
+    col: number,
+    row: number,
+    value: number | string,
+    attr: string,
+  ) {
     let newData = data
     newData[col][row][attr] = value
     setData(newData)
   }
 
-  function handleOnChange(col, row, value, attr) {
+  function handleOnChange(
+    col: number,
+    row: number,
+    value: number | string,
+    attr: string,
+  ) {
     console.log(col, row, value, attr)
     if ((attr === 'rowSpan' || attr === 'colSpan') && value < 1) {
       setRow(rowVal + 1)
@@ -106,14 +116,14 @@ const TableModal = ({
     setRow(rowVal + 1)
   }
 
-  function addRow(col) {
+  function addRow(col: number) {
     let newData = data
     newData[col] = [...newData[col], {text: '', rowSpan: 1, colSpan: 1}]
     setData(newData)
     setRow(rowVal + 1)
   }
 
-  function removeItem(col, row) {
+  function removeItem(col: number, row: number) {
     let newData = data
     if (newData[col].length === 1) {
       newData = [...newData.slice(0, col), ...newData.slice(col + 1)]
@@ -152,7 +162,7 @@ const TableModal = ({
                 {!!data?.length && (
                   <thead>
                     <tr>
-                      {data[0].map((item, j) => {
+                      {data[0].map((item: any, j: number) => {
                         if (maxCol < j) maxCol = j
                         return (
                           // eslint-disable-next-line react/jsx-key
@@ -190,14 +200,14 @@ const TableModal = ({
                   </thead>
                 )}
                 <tbody>
-                  {data.map((colItem, i) => {
+                  {data.map((colItem: any, i: number) => {
                     if (i === 0) {
                       return null
                     }
                     return (
                       // eslint-disable-next-line react/jsx-key
                       <tr>
-                        {colItem.map((item, j) => {
+                        {colItem.map((item: any, j: number) => {
                           if (maxCol < j) maxCol = j
                           return (
                             // eslint-disable-next-line react/jsx-key
