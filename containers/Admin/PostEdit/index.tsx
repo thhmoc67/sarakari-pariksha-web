@@ -216,11 +216,7 @@ const PostEdit: NextPage = () => {
           </Grid>
         )}
 
-        <Modal
-          open={preview}
-          onClose={() => setPreview(false)}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description">
+        <Modal open={preview} onClose={() => setPreview(false)}>
           <Box sx={style}>
             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
               <CloseIcon
