@@ -38,7 +38,7 @@ const AddLinks = ({data, title, updateForm}: AddLinks) => {
             {title}
           </Button>
         </div>
-        {data?.map((item: any, index: number) => (
+        {/* {data?.map((item: any, index: number) => (
           <Grid container key={title + ' card' + index}>
             <Grid md={6} padding={1}>
               <Typography>{item.label}</Typography>
@@ -62,7 +62,7 @@ const AddLinks = ({data, title, updateForm}: AddLinks) => {
               ))}
             </Grid>
           </Grid>
-        ))}
+        ))} */}
       </Grid>
 
       {openList && (
@@ -85,8 +85,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '100vw',
-  height: '100vh',
+  width: '90vw',
+  height: '90vh',
   bgcolor: 'background.paper',
   border: '1px solid #aaa',
   boxShadow: 24,
@@ -165,11 +165,7 @@ const ListModal = ({open, handleClose, data, title, updateData}: ListModal) => {
   }, [])
 
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description">
+    <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
         <Typography variant="h5" component="h1" marginBottom={2}>
           {title}

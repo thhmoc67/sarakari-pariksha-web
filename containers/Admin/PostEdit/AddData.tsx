@@ -35,7 +35,7 @@ const AddData = ({data, title, updateForm}: AddData) => {
         <Button onClick={handleOpen} startIcon={<TableChartIcon />}>
           {title}
         </Button>
-        {data?.map((item, index: number) => (
+        {/* {data?.map((item, index: number) => (
           <Grid container key={title + ' card' + index}>
             <Grid md={6} padding={1}>
               <Typography>{item.label}</Typography>
@@ -49,7 +49,7 @@ const AddData = ({data, title, updateForm}: AddData) => {
               </Typography>
             </Grid>
           </Grid>
-        ))}
+        ))} */}
       </Grid>
 
       {/* modal */}
@@ -73,7 +73,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 1024,
+  width: '90vw',
+  height: '90vh',
   bgcolor: 'background.paper',
   border: '1px solid #aaa',
   boxShadow: 24,
