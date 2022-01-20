@@ -8,31 +8,48 @@ import {firebaseConfig} from '../config/firebase'
 import {collection, getDocs} from 'firebase/firestore'
 import {useEffect, useState} from 'react'
 
-interface Props {}
+interface Props {
+  latestUpdates: any
+  results: any
+  notifications?: any
+}
 
-const App: NextPage<Props> = props => {
-  const [results, setResults] = useState({})
-  const [latestUpdates, setLatestUpdates] = useState([])
+const App: NextPage<Props> = ({
+  latestUpdates = [],
+  results = {},
+  notifications = [],
+}) => {
+  return (
+    <>
+      <Head>
+        <title>Sarkari Pariksha</title>
+        <meta name="description" content="Sarkari Pariksha" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Layout>
+        <Home results={results} updates={latestUpdates} />
+      </Layout>
+    </>
+  )
+}
 
-  async function getUpdates() {}
+App.getInitialProps = async ({req}: any) => {
+  let notifications, latestUpdates, results
 
   async function getAllResults() {
     const firebaseApp = initializeApp(firebaseConfig)
     const db = getFirestore()
     const querySnapshot = await getDocs(collection(db, 'posts'))
-    let notifications
 
     const docRef = await doc(db, 'common', 'latest')
     const docSnap = await getDoc(docRef)
     if (docSnap?.exists()) {
       const data = docSnap.data()
-      setLatestUpdates(
-        data?.updates
-          ?.sort(
-            (a: any, b: any) => b?.created_at?.seconds - a?.created_at?.seconds,
-          )
-          .slice(0, 8),
-      )
+      latestUpdates = data?.updates
+        ?.sort(
+          (a: any, b: any) => b?.created_at?.seconds - a?.created_at?.seconds,
+        )
+        .slice(0, 8)
     } else {
     }
 
@@ -41,7 +58,7 @@ const App: NextPage<Props> = props => {
     if (notificationSnap?.exists()) {
       const data = notificationSnap.data()
       notifications = data?.notifications?.sort(
-        (a:any, b:any) => b?.created_at?.seconds - a?.created_at?.seconds,
+        (a: any, b: any) => b?.created_at?.seconds - a?.created_at?.seconds,
       )
     } else {
       notifications = []
@@ -51,7 +68,8 @@ const App: NextPage<Props> = props => {
     querySnapshot.forEach(doc => {
       list.push({...doc.data(), id: doc.id})
     })
-    const results: any = {
+
+    results = {
       notifications,
       latestjobs: list
         .filter((item: any) => item.tags?.includes('latest jobs'))
@@ -78,31 +96,15 @@ const App: NextPage<Props> = props => {
         .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
         .slice(0, 9),
     }
-    setResults(results)
+    // setResults(results)
   }
-  useEffect(() => {
-    getAllResults()
-    return () => {}
-  }, [])
-  return (
-    <>
-      <Head>
-        <title>Sarkari Pariksha</title>
-        <meta name="description" content="Sarkari Pariksha" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Layout>
-        <Home
-          results={results}
-          updates={latestUpdates}
-        />
-      </Layout>
-    </>
-  )
-}
+  await getAllResults()
 
-App.getInitialProps = async ({req}: any) => {
-  return {}
+  return {
+    latestUpdates,
+    results,
+    notifications,
+  }
 }
 
 export default App

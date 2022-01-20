@@ -8,7 +8,7 @@ import {examList, updateList} from './constants'
 const Home = ({results, updates}: any) => {
   return (
     <div className="home-container ">
-      <Notifications list={results.notifications} />
+      <Notifications list={results?.notifications || []} />
       <LatestUpdates list={updates} />
       <div className="flex-row cards">
         <ListCard

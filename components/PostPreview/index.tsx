@@ -96,6 +96,11 @@ const PostPreview = ({data}: PostPreview) => {
           <p className="name-item-value">{data.description}</p>
         </div>
       </div>
+      <div dangerouslySetInnerHTML={{ __html: data?.content}} />
+
+      {/* <div>
+        { data?.content}
+      </pre> */}
 
       {/* table header */}
       <div className="post-header">

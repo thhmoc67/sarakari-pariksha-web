@@ -1,6 +1,6 @@
 import {Box, Button, Card, Grid, Modal} from '@mui/material'
 import type {NextPage} from 'next'
-import React from 'react'
+import React, {useState, useRef} from 'react'
 import CommonData from './CommonData'
 import AddData from './AddData'
 import {postInitalState} from '../../../config/constants/postInitalState'
@@ -17,6 +17,13 @@ import PostPreview from '../../../components/PostPreview'
 import Tags from './Tags'
 import NewPost from './NewPost'
 import CustomTable from './CustomTable'
+import dynamic from 'next/dynamic'
+
+const importJodit = () => import('jodit-react')
+
+const JoditEditor = dynamic(importJodit, {
+  ssr: false,
+})
 
 const PostEdit: NextPage = () => {
   const [form, setForm] = React.useState<any>(null)
@@ -24,43 +31,50 @@ const PostEdit: NextPage = () => {
   let firebaseApp = React.useRef<unknown>()
   let db = React.useRef<any>()
 
+  const editor = useRef(null)
+  // const [content, setContent] = useState('')
+
+  const config = {
+    innerWidth: 1024,
+    readonly: false, // all options from https://xdsoft.net/jodit/doc/
+  }
   const [preview, setPreview] = React.useState(false)
 
   function updateForm(data: any, attr: string): void {
     setForm({...form, [attr]: data})
   }
 
-  function updateFormCustomData(data: any, index: number): void {
-    setForm({
-      ...form,
-      customData: [
-        ...form.customData.slice(0, index),
-        {
-          type: form.customData[index].type,
-          label: form.customData[index].label,
-          data,
-        },
-        ...form.customData.slice(index + 1, form.customData.length),
-      ],
-    })
-  }
+  // function updateFormCustomData(data: any, index: number): void {
+  //   setForm({
+  //     ...form,
+  //     customData: [
+  //       ...form.customData.slice(0, index),
+  //       {
+  //         type: form.customData[index].type,
+  //         label: form.customData[index].label,
+  //         data,
+  //       },
+  //       ...form.customData.slice(index + 1, form.customData.length),
+  //     ],
+  //   })
+  // }
 
-  function addCustomData(type: string, label: string) {
-    setForm({
-      ...form,
-      customData: [
-        ...form.customData,
-        {type, label, data: type === 'customtable' ? null : []},
-      ],
-    })
-  }
+  // function addCustomData(type: string, label: string) {
+  //   setForm({
+  //     ...form,
+  //     customData: [
+  //       ...form.customData,
+  //       {type, label, data: type === 'customtable' ? null : []},
+  //     ],
+  //   })
+  // }
 
-  const listDiffferentEntries = [
-    'important_dates',
-    'application_fee',
-    'age_limit',
-    'qualification',
-  ]
+  // const listDiffferentEntries = [
+  //   'important_dates',
+  //   'application_fee',
+  //   'age_limit',
+  //   'qualification',
+  // ]
 
   async function dbUpdate() {
     setLoader(true)
@@ -141,7 +155,15 @@ const PostEdit: NextPage = () => {
           'loading...'
         ) : (
           <Grid item md={12} margin={2}>
-            <CommonData form={form} updateForm={updateForm} />
+            <JoditEditor
+              ref={editor}
+              value={form?.content || ''}
+              config={config}
+              tabIndex={1} // tabIndex of textarea
+              onBlur={newContent => updateForm(newContent, 'content')} // preferred to use only this option to update the content for performance reasons
+              onChange={newContent => {}}
+            />
+            {/* <CommonData form={form} updateForm={updateForm} />
             {listDiffferentEntries.map(entryItem => (
               <Card style={{padding: 12, marginBottom: 12}} key={entryItem}>
                 <AddData
@@ -212,7 +234,7 @@ const PostEdit: NextPage = () => {
                 )
               } else return null
             })}
-            <AddCustomData addCustomData={addCustomData} />
+            <AddCustomData addCustomData={addCustomData} /> */}
           </Grid>
         )}
 
@@ -239,7 +261,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '90vw',
+  width: 1024,
   height: '90vh',
   bgcolor: 'background.paper',
   border: '2px solid #000',
