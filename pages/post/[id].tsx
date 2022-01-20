@@ -9,50 +9,46 @@ import {firebaseConfig} from '../../config/firebase'
 import {doc, getDoc} from 'firebase/firestore'
 import PostPreview from '../../components/PostPreview'
 
-interface Props {}
+interface Props {
+  post?: any
+}
 
 const PostPage: NextPage<Props> = props => {
-  const [post, setPost] = React.useState<any>({})
-  async function fetchPost() {
-    const firebaseApp = initializeApp(firebaseConfig)
-    const db = getFirestore()
-
-    const docRef = doc(
-      db,
-      'posts',
-      location.pathname.split('/')[location.pathname.split('/').length - 1],
-    )
-
-    const docSnap = await getDoc(docRef)
-
-    if (docSnap?.exists()) {
-      const data = docSnap.data()
-      setPost(data)
-    } else {
-      // doc.data() will be undefined in this case
-      console.log('No such document!')
-    }
-  }
-  React.useEffect(() => {
-    fetchPost()
-    return () => {}
-  }, [])
   return (
     <div>
       <Head>
-        <title>Sarkari Pariksa | {post?.post_name}</title>
+        <title>Sarkari Pariksa | {props?.post?.post_name}</title>
         <meta name="description" content="Sarkari Pariksa" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <PostPreview data={post} />
+        <PostPreview data={props?.post} />
       </Layout>
     </div>
   )
 }
 
+async function fetchPost(id: string) {
+  const firebaseApp = initializeApp(firebaseConfig)
+  const db = getFirestore()
+
+  const docRef = doc(db, 'posts', id)
+
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap?.exists()) {
+    return docSnap.data()
+  } else {
+    // doc.data() will be undefined in this case
+    console.log('No such document!')
+    return {}
+  }
+}
+
 PostPage.getInitialProps = async ({req}: any) => {
-  return {}
+  const id = req.url.split('/')[req.url.split('/').length - 1]
+  const post = await fetchPost(id)
+  return {post}
 }
 
 export default PostPage
