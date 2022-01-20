@@ -1,17 +1,17 @@
-import {Box, Button, Card, Grid, Modal} from '@mui/material'
-import type {NextPage} from 'next'
-import React, {useState, useRef} from 'react'
+import { Box, Button, Card, Grid, Modal } from '@mui/material'
+// import type {NextPage} from 'next'
+import React, { useState, useRef } from 'react'
 import CommonData from './CommonData'
 import AddData from './AddData'
-import {postInitalState} from '../../../config/constants/postInitalState'
+import { postInitalState } from '../../../config/constants/postInitalState'
 import AddList from './AddList'
 import AddLinks from './AddLinks'
 import AddCustomData from './AddCustomData'
-import {initializeApp} from 'firebase/app'
-import {getFirestore} from 'firebase/firestore'
-import {collection, setDoc} from 'firebase/firestore'
-import {firebaseConfig} from '../../../config/firebase'
-import {doc, getDoc} from 'firebase/firestore'
+import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
+import { collection, setDoc } from 'firebase/firestore'
+import { firebaseConfig } from '../../../config/firebase'
+import { doc, getDoc } from 'firebase/firestore'
 import CloseIcon from '@mui/icons-material/Close'
 import PostPreview from '../../../components/PostPreview'
 import Tags from './Tags'
@@ -25,13 +25,13 @@ const JoditEditor = dynamic(importJodit, {
   ssr: false,
 })
 
-const PostEdit: NextPage = () => {
-  const [form, setForm] = React.useState<any>(null)
+const PostEdit = () => {
+  const [form, setForm] = React.useState(null)
   const [loader, setLoader] = React.useState(false)
-  let firebaseApp = React.useRef<unknown>()
-  let db = React.useRef<any>()
+  let firebaseApp = React.useRef()
+  let db = React.useRef()
 
-  const editor = useRef(null)
+  // const editor = useRef<any>(null)
   // const [content, setContent] = useState('')
 
   const config = {
@@ -40,8 +40,8 @@ const PostEdit: NextPage = () => {
   }
   const [preview, setPreview] = React.useState(false)
 
-  function updateForm(data: any, attr: string): void {
-    setForm({...form, [attr]: data})
+  function updateForm(data, attr) {
+    setForm({ ...form, [attr]: data })
   }
 
   // function updateFormCustomData(data: any, index: number): void {
@@ -128,7 +128,8 @@ const PostEdit: NextPage = () => {
 
   React.useEffect(() => {
     firebaseSetup()
-    return () => {}
+    return () => { }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!form) return null
@@ -156,12 +157,12 @@ const PostEdit: NextPage = () => {
         ) : (
           <Grid item md={12} margin={2}>
             <JoditEditor
-              ref={editor}
+              // ref={editor}
               value={form?.content || ''}
               config={config}
               tabIndex={1} // tabIndex of textarea
               onBlur={newContent => updateForm(newContent, 'content')} // preferred to use only this option to update the content for performance reasons
-              onChange={newContent => {}}
+              onChange={newContent => { }}
             />
             {/* <CommonData form={form} updateForm={updateForm} />
             {listDiffferentEntries.map(entryItem => (
@@ -240,9 +241,9 @@ const PostEdit: NextPage = () => {
 
         <Modal open={preview} onClose={() => setPreview(false)}>
           <Box sx={style}>
-            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <CloseIcon
-                style={{cursor: 'pointer'}}
+                style={{ cursor: 'pointer' }}
                 onClick={() => setPreview(false)}
               />
             </div>
@@ -257,7 +258,7 @@ const PostEdit: NextPage = () => {
 export default PostEdit
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',

@@ -22,6 +22,7 @@ export type Link = {
 }
 
 export type Post = {
+  content: string,
   post_name?: string
   post_date?: string
   description?: string
