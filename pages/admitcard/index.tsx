@@ -2,9 +2,12 @@ import React from 'react'
 import type {NextPage} from 'next'
 import Head from 'next/head'
 import Layout from '../../components/Layout'
-import PostsList from '../../components/PostsList'
+import {fetchPostResults} from '../../utils/api'
+import PostTitleListCard from '../../components/PostTitleListCard'
 
-interface Props {}
+interface Props {
+  results?: any
+}
 
 const AdmitCardPage: NextPage<Props> = props => {
   return (
@@ -16,14 +19,15 @@ const AdmitCardPage: NextPage<Props> = props => {
       </Head>
       <Layout>
         <h1>Admit Card</h1>
-        <PostsList tag="admit card" />
+        <PostTitleListCard results={props?.results} />
       </Layout>
     </>
   )
 }
 
 AdmitCardPage.getInitialProps = async ({req}: any) => {
-  return {}
+  const results = await fetchPostResults('admit card')
+  return {results}
 }
 
 export default AdmitCardPage
