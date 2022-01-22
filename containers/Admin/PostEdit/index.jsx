@@ -17,13 +17,7 @@ import PostPreview from '../../../components/PostPreview'
 import Tags from './Tags'
 import NewPost from './NewPost'
 import CustomTable from './CustomTable'
-import dynamic from 'next/dynamic'
-
-const importJodit = () => import('jodit-react')
-
-const JoditEditor = dynamic(importJodit, {
-  ssr: false,
-})
+import AddDocument from './AddDocument'
 
 const PostEdit = () => {
   const [form, setForm] = React.useState(null)
@@ -34,47 +28,44 @@ const PostEdit = () => {
   // const editor = useRef<any>(null)
   // const [content, setContent] = useState('')
 
-  const config = {
-    innerWidth: 1024,
-    readonly: false, // all options from https://xdsoft.net/jodit/doc/
-  }
+
   const [preview, setPreview] = React.useState(false)
 
   function updateForm(data, attr) {
     setForm({ ...form, [attr]: data })
   }
 
-  // function updateFormCustomData(data: any, index: number): void {
-  //   setForm({
-  //     ...form,
-  //     customData: [
-  //       ...form.customData.slice(0, index),
-  //       {
-  //         type: form.customData[index].type,
-  //         label: form.customData[index].label,
-  //         data,
-  //       },
-  //       ...form.customData.slice(index + 1, form.customData.length),
-  //     ],
-  //   })
-  // }
+  function updateFormCustomData(data, index) {
+    setForm({
+      ...form,
+      customData: [
+        ...form.customData.slice(0, index),
+        {
+          type: form.customData[index].type,
+          label: form.customData[index].label,
+          data,
+        },
+        ...form.customData.slice(index + 1, form.customData.length),
+      ],
+    })
+  }
 
-  // function addCustomData(type: string, label: string) {
-  //   setForm({
-  //     ...form,
-  //     customData: [
-  //       ...form.customData,
-  //       {type, label, data: type === 'customtable' ? null : []},
-  //     ],
-  //   })
-  // }
+  function addCustomData(type, label) {
+    setForm({
+      ...form,
+      customData: [
+        ...form.customData,
+        { type, label, data: type === 'customtable' ? null : [] },
+      ],
+    })
+  }
 
-  // const listDiffferentEntries = [
-  //   'important_dates',
-  //   'application_fee',
-  //   'age_limit',
-  //   'qualification',
-  // ]
+  const listDiffferentEntries = [
+    'important_dates',
+    'application_fee',
+    'age_limit',
+    'qualification',
+  ]
 
   async function dbUpdate() {
     setLoader(true)
@@ -156,54 +147,46 @@ const PostEdit = () => {
           'loading...'
         ) : (
           <Grid item md={12} margin={2}>
-            <JoditEditor
-              // ref={editor}
-              value={form?.content || ''}
-              config={config}
-              tabIndex={1} // tabIndex of textarea
-              onBlur={newContent => updateForm(newContent, 'content')} // preferred to use only this option to update the content for performance reasons
-              onChange={newContent => { }}
-            />
-            {/* <CommonData form={form} updateForm={updateForm} />
+            <CommonData form={form} updateForm={updateForm} />
             {listDiffferentEntries.map(entryItem => (
-              <Card style={{padding: 12, marginBottom: 12}} key={entryItem}>
+              <Card style={{ padding: 12, marginBottom: 12 }} key={entryItem}>
                 <AddData
                   data={form[entryItem]}
                   title={entryItem.split('_').join(' ').toUpperCase()}
-                  updateForm={(data: any) => updateForm(data, entryItem)}
+                  updateForm={(data) => updateForm(data, entryItem)}
                 />
                 <AddList
                   data={form[entryItem + '_notes']}
                   title={'Notes'}
-                  updateForm={(data: any) =>
+                  updateForm={(data) =>
                     updateForm(data, entryItem + '_notes')
                   }
                 />
               </Card>
             ))}
-            <Card style={{padding: 12, marginBottom: 12}}>
+            <Card style={{ padding: 12, marginBottom: 12 }}>
               <AddList
                 data={form['payment_modes']}
                 title={'Payment Modes'}
-                updateForm={(data: any) => updateForm(data, 'payment_modes')}
+                updateForm={(data) => updateForm(data, 'payment_modes')}
               />
             </Card>
-            <Card style={{padding: 12, marginBottom: 12}}>
+            <Card style={{ padding: 12, marginBottom: 12 }}>
               <AddLinks
                 data={form.important_links}
                 title={'Important Links'}
-                updateForm={(data: any) => updateForm(data, 'important_links')}
+                updateForm={(data) => updateForm(data, 'important_links')}
               />
             </Card>
 
-            {form.customData.map((entryItem: any, index: number) => {
+            {form.customData.map((entryItem, index) => {
               if (entryItem.type === 'list') {
                 return (
-                  <Card style={{padding: 12, marginBottom: 12}}>
+                  <Card style={{ padding: 12, marginBottom: 12 }}>
                     <AddList
                       data={entryItem.data}
                       title={entryItem.label}
-                      updateForm={(data: any) =>
+                      updateForm={(data) =>
                         updateFormCustomData(data, index)
                       }
                     />
@@ -211,11 +194,11 @@ const PostEdit = () => {
                 )
               } else if (entryItem.type === 'table') {
                 return (
-                  <Card style={{padding: 12, marginBottom: 12}}>
+                  <Card style={{ padding: 12, marginBottom: 12 }}>
                     <AddData
                       data={entryItem.data}
                       title={entryItem.label}
-                      updateForm={(data: any) =>
+                      updateForm={(data) =>
                         updateFormCustomData(data, index)
                       }
                     />
@@ -223,11 +206,23 @@ const PostEdit = () => {
                 )
               } else if (entryItem.type === 'customtable') {
                 return (
-                  <Card style={{padding: 12, marginBottom: 12}}>
+                  <Card style={{ padding: 12, marginBottom: 12 }}>
                     <CustomTable
                       data={entryItem.data}
                       title={entryItem.label}
-                      updateForm={(data: any) =>
+                      updateForm={(data) =>
+                        updateFormCustomData(data, index)
+                      }
+                    />
+                  </Card>
+                )
+              } else if (entryItem.type === 'document') {
+                return (
+                  <Card style={{ padding: 12, marginBottom: 12 }}>
+                    <AddDocument
+                      data={entryItem.data}
+                      title={entryItem.label}
+                      updateForm={(data) =>
                         updateFormCustomData(data, index)
                       }
                     />
@@ -235,7 +230,7 @@ const PostEdit = () => {
                 )
               } else return null
             })}
-            <AddCustomData addCustomData={addCustomData} /> */}
+            <AddCustomData addCustomData={addCustomData} />
           </Grid>
         )}
 
@@ -263,7 +258,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 1024,
-  height: '90vh',
+  height: '100vh',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,

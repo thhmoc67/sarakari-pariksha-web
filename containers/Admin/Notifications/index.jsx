@@ -1,12 +1,12 @@
-import {Box, Button, Grid, Modal} from '@mui/material'
+import { Box, Button, Grid, Modal } from '@mui/material'
 import React from 'react'
 import AddData from '../PostEdit/AddData'
 import CloseIcon from '@mui/icons-material/Close'
-import {initializeApp} from 'firebase/app'
-import {getFirestore} from 'firebase/firestore'
-import {collection, setDoc} from 'firebase/firestore'
-import {firebaseConfig} from '../../../config/firebase'
-import {doc, getDoc} from 'firebase/firestore'
+import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
+import { collection, setDoc } from 'firebase/firestore'
+import { firebaseConfig } from '../../../config/firebase'
+import { doc, getDoc } from 'firebase/firestore'
 import NotificationsCompnent from '../../../components/Notifications'
 
 const Notifications = () => {
@@ -65,13 +65,13 @@ const Notifications = () => {
 
   React.useEffect(() => {
     firebaseSetup()
-    return () => {}
+    return () => { }
   }, [])
 
   if (loader) return <div>loading...</div>
 
   return (
-    <div style={{padding: 32}}>
+    <div style={{ padding: 32 }}>
       <Grid container spacing={2}>
         <Grid item md={10} marginTop={2}></Grid>
         <Grid item md={1} marginTop={2}>
@@ -94,9 +94,9 @@ const Notifications = () => {
 
       <Modal disableScrollLock open={preview} onClose={() => setPreview(false)}>
         <Box sx={style}>
-          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <CloseIcon
-              style={{cursor: 'pointer'}}
+              style={{ cursor: 'pointer' }}
               onClick={() => setPreview(false)}
             />
           </div>
@@ -124,4 +124,5 @@ const style = {
   border: '1px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'scroll',
 }

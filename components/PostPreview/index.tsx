@@ -22,7 +22,7 @@ export type Link = {
 }
 
 export type Post = {
-  content: string,
+  content: string
   post_name?: string
   post_date?: string
   description?: string
@@ -67,6 +67,13 @@ const PostPreview = ({data}: PostPreview) => {
             return tableBody(entryItem.label, entryItem?.data, [])
           } else if (entryItem.type === 'list') {
             return tableBody(entryItem.label, [], entryItem?.data)
+          } else if (entryItem.type === 'document') {
+            return (
+              <div className="post-table-body">
+                <h1>{entryItem.label}</h1>
+                <div dangerouslySetInnerHTML={{__html: entryItem?.data}} />
+              </div>
+            )
           } else if (entryItem.type === 'customtable') {
             return (
               <CustomTablePreview
@@ -97,7 +104,6 @@ const PostPreview = ({data}: PostPreview) => {
           <p className="name-item-value">{data.description}</p>
         </div>
       </div>
-      <div dangerouslySetInnerHTML={{ __html: data?.content}} />
 
       {/* <div>
         { data?.content}

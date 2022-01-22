@@ -1,6 +1,5 @@
 import React from 'react'
-import {Button, Card, Grid, IconButton, TextField} from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
+import {Button, Grid, IconButton, TextField} from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -8,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import InsertLinkIcon from '@mui/icons-material/InsertLink'
 import AddLinkIcon from '@mui/icons-material/AddLink'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'
-import {Link, LinkList, PostList} from '../../../components/PostPreview'
+import {Link, PostList} from '../../../components/PostPreview'
 
 type AddLinks = {
   data: PostList[]
@@ -25,6 +24,7 @@ const AddLinks = ({data, title, updateForm}: AddLinks) => {
     updateForm(data)
     handleCloseList()
   }
+
   return (
     <Grid container spacing={3}>
       <Grid item md={12} marginTop={2}>
@@ -85,8 +85,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '90vw',
-  height: '90vh',
+  width: '100vw',
+  height: '100vh',
   bgcolor: 'background.paper',
   border: '1px solid #aaa',
   boxShadow: 24,

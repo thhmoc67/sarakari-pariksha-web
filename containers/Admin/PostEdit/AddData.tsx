@@ -73,12 +73,13 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '90vw',
-  height: '90vh',
+  width: '100vw',
+  height: '100vh',
   bgcolor: 'background.paper',
   border: '1px solid #aaa',
   boxShadow: 24,
   p: 4,
+  overflow: 'scroll',
 }
 
 // -----------------------------------------------------component input array-------------------------------------------------------------------------------------------------
