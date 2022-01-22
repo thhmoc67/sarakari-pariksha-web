@@ -1,8 +1,9 @@
 import React from 'react'
-import { Box, Grid, Modal, TextField, Button } from '@mui/material'
+import {Box, Grid, Modal, TextField, Button} from '@mui/material'
 import DataObjectIcon from '@mui/icons-material/DataObject'
+
 const style = {
-  position: 'absolute',
+  position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -15,7 +16,7 @@ const style = {
   overflow: 'scroll',
 }
 
-const CommonData = ({ form, updateForm }) => {
+const CommonData = ({form, updateForm}: any) => {
   const [showModal, setShowModal] = React.useState(false)
   return (
     <>
@@ -93,10 +94,7 @@ const CommonData = ({ form, updateForm }) => {
                 />
               </Grid>
             </Grid>
-            <Button
-              variant='contained'
-              onClick={() => setShowModal(false)}
-            >
+            <Button variant="contained" onClick={() => setShowModal(false)}>
               Close
             </Button>
           </Box>

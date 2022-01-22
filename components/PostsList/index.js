@@ -34,6 +34,7 @@ const AnswerkeyPage = props => {
   React.useEffect(() => {
     fetchResults()
     return () => {}
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>
