@@ -18,6 +18,7 @@ import Tags from './Tags'
 import NewPost from './NewPost'
 import CustomTable from './CustomTable'
 import AddDocument from './AddDocument'
+import DraggableComponent from './Dragable'
 
 const PostEdit = () => {
   const [form, setForm] = React.useState(null)
@@ -55,7 +56,7 @@ const PostEdit = () => {
       ...form,
       customData: [
         ...form.customData,
-        { type, label, data: type === 'customtable' ? null : [] },
+        { type, label, data: type === 'customtable' ? null : [], id: new Date().getTime() },
       ],
     })
   }
@@ -146,7 +147,7 @@ const PostEdit = () => {
         {loader ? (
           'loading...'
         ) : (
-          <div style={{ padding: 32 }}>
+          <div style={{ padding: 32, width: '100%' }}>
             <Grid container spacing={2}>
               <Grid item md={12}>
                 <Grid container spacing={2}>
@@ -155,8 +156,12 @@ const PostEdit = () => {
                       <CommonData form={form} updateForm={updateForm} />
                     </Card>
                   </Grid>
+                  <Grid item md={12}>
+                    <DraggableComponent form={form} setForm={setForm}
+                      updateFormCustomData={updateFormCustomData} />
+                  </Grid>
 
-                  {listDiffferentEntries.map(entryItem => (
+                  {/* {listDiffferentEntries.map(entryItem => (
                     <Grid item md={6} key={entryItem}>
                       <Card style={{ padding: 12, marginBottom: 12 }} >
                         <AddData
@@ -249,7 +254,7 @@ const PostEdit = () => {
                       </Grid>
                       )
                     } else return null
-                  })}
+                  })} */}
                   <AddCustomData addCustomData={addCustomData} />
                 </Grid>
               </Grid>
