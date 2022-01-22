@@ -146,92 +146,115 @@ const PostEdit = () => {
         {loader ? (
           'loading...'
         ) : (
-          <Grid item md={12} margin={2}>
-            <CommonData form={form} updateForm={updateForm} />
-            {listDiffferentEntries.map(entryItem => (
-              <Card style={{ padding: 12, marginBottom: 12 }} key={entryItem}>
-                <AddData
-                  data={form[entryItem]}
-                  title={entryItem.split('_').join(' ').toUpperCase()}
-                  updateForm={(data) => updateForm(data, entryItem)}
-                />
-                <AddList
-                  data={form[entryItem + '_notes']}
-                  title={'Notes'}
-                  updateForm={(data) =>
-                    updateForm(data, entryItem + '_notes')
-                  }
-                />
-              </Card>
-            ))}
-            <Card style={{ padding: 12, marginBottom: 12 }}>
-              <AddList
-                data={form['payment_modes']}
-                title={'Payment Modes'}
-                updateForm={(data) => updateForm(data, 'payment_modes')}
-              />
-            </Card>
-            <Card style={{ padding: 12, marginBottom: 12 }}>
-              <AddLinks
-                data={form.important_links}
-                title={'Important Links'}
-                updateForm={(data) => updateForm(data, 'important_links')}
-              />
-            </Card>
+          <div style={{ padding: 32 }}>
+            <Grid container spacing={2}>
+              <Grid item md={12}>
+                <Grid container spacing={2}>
+                  <Grid item md={12}>
+                    <Card style={{ padding: 12, marginBottom: 12 }} >
+                      <CommonData form={form} updateForm={updateForm} />
+                    </Card>
+                  </Grid>
 
-            {form.customData.map((entryItem, index) => {
-              if (entryItem.type === 'list') {
-                return (
-                  <Card style={{ padding: 12, marginBottom: 12 }}>
-                    <AddList
-                      data={entryItem.data}
-                      title={entryItem.label}
-                      updateForm={(data) =>
-                        updateFormCustomData(data, index)
-                      }
-                    />
-                  </Card>
-                )
-              } else if (entryItem.type === 'table') {
-                return (
-                  <Card style={{ padding: 12, marginBottom: 12 }}>
-                    <AddData
-                      data={entryItem.data}
-                      title={entryItem.label}
-                      updateForm={(data) =>
-                        updateFormCustomData(data, index)
-                      }
-                    />
-                  </Card>
-                )
-              } else if (entryItem.type === 'customtable') {
-                return (
-                  <Card style={{ padding: 12, marginBottom: 12 }}>
-                    <CustomTable
-                      data={entryItem.data}
-                      title={entryItem.label}
-                      updateForm={(data) =>
-                        updateFormCustomData(data, index)
-                      }
-                    />
-                  </Card>
-                )
-              } else if (entryItem.type === 'document') {
-                return (
-                  <Card style={{ padding: 12, marginBottom: 12 }}>
-                    <AddDocument
-                      data={entryItem.data}
-                      title={entryItem.label}
-                      updateForm={(data) =>
-                        updateFormCustomData(data, index)
-                      }
-                    />
-                  </Card>
-                )
-              } else return null
-            })}
-            <AddCustomData addCustomData={addCustomData} />
-          </Grid>
+                  {listDiffferentEntries.map(entryItem => (
+                    <Grid item md={6} key={entryItem}>
+                      <Card style={{ padding: 12, marginBottom: 12 }} >
+                        <AddData
+                          data={form[entryItem]}
+                          title={entryItem.split('_').join(' ').toUpperCase()}
+                          updateForm={(data) => updateForm(data, entryItem)}
+                        />
+                        <AddList
+                          data={form[entryItem + '_notes']}
+                          title={'Notes'}
+                          updateForm={(data) =>
+                            updateForm(data, entryItem + '_notes')
+                          }
+                        />
+                      </Card>
+                    </Grid>
+                  ))}
+                  <Grid item md={6}>
+                    <Card style={{ padding: 12, marginBottom: 12 }}>
+                      <AddList
+                        data={form['payment_modes']}
+                        title={'Payment Modes'}
+                        updateForm={(data) => updateForm(data, 'payment_modes')}
+                      />
+                    </Card>
+                  </Grid>
+
+                  <Grid item md={6}>
+                    <Card style={{ padding: 12, marginBottom: 12 }}>
+                      <AddLinks
+                        data={form.important_links}
+                        title={'Important Links'}
+                        updateForm={(data) => updateForm(data, 'important_links')}
+                      />
+                    </Card>
+                  </Grid>
+
+                  {form.customData.map((entryItem, index) => {
+                    if (entryItem.type === 'list') {
+                      return (
+                        <Grid item md={6}>
+                          <Card style={{ padding: 12, marginBottom: 12 }}>
+                            <AddList
+                              data={entryItem.data}
+                              title={entryItem.label}
+                              updateForm={(data) =>
+                                updateFormCustomData(data, index)
+                              }
+                            />
+                          </Card>
+                        </Grid>
+                      )
+                    } else if (entryItem.type === 'table') {
+                      return (<Grid item md={6}>
+                        <Card style={{ padding: 12, marginBottom: 12 }}>
+                          <AddData
+                            data={entryItem.data}
+                            title={entryItem.label}
+                            updateForm={(data) =>
+                              updateFormCustomData(data, index)
+                            }
+                          />
+                        </Card>
+                      </Grid>
+                      )
+                    } else if (entryItem.type === 'customtable') {
+                      return (<Grid item md={6}>
+                        <Card style={{ padding: 12, marginBottom: 12 }}>
+                          <CustomTable
+                            data={entryItem.data}
+                            title={entryItem.label}
+                            updateForm={(data) =>
+                              updateFormCustomData(data, index)
+                            }
+                          />
+                        </Card>
+                      </Grid>
+                      )
+                    } else if (entryItem.type === 'document') {
+                      return (<Grid item md={6}>
+                        <Card style={{ padding: 12, marginBottom: 12 }}>
+                          <AddDocument
+                            data={entryItem.data}
+                            title={entryItem.label}
+                            updateForm={(data) =>
+                              updateFormCustomData(data, index)
+                            }
+                          />
+                        </Card>
+                      </Grid>
+                      )
+                    } else return null
+                  })}
+                  <AddCustomData addCustomData={addCustomData} />
+                </Grid>
+              </Grid>
+            </Grid>
+          </div>
         )}
 
         <Modal open={preview} onClose={() => setPreview(false)}>

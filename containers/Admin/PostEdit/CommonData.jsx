@@ -36,6 +36,7 @@ const CommonData = ({ form, updateForm }) => {
         </Grid>
         <Modal open={showModal} onClose={() => setShowModal(false)}>
           <Box sx={style}>
+            <h1>Common Data</h1>
             <Grid container spacing={3} marginBottom={2}>
               <Grid item md={12}>
                 <TextField
