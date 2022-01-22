@@ -261,25 +261,32 @@ const ListModal = ({
             <AddLinkIcon />
           </IconButton>
         </Grid>
-        <>
-          <Button
-            onClick={handleClose}
-            variant="outlined"
-            style={{marginRight: 12}}>
-            Cancel
-          </Button>
 
-          <Button
-            onClick={() => updateData(listData)}
-            variant="contained"
-            style={{marginRight: 12}}>
-            Submit
-          </Button>
+        <Grid container spacing={3}>
+          <Grid item md={11}>
+            <Button
+              onClick={e => handleClose()}
+              variant={'outlined'}
+              style={{ marginRight: 12 }}>
+              Cancel
+            </Button>
 
-          <Button onClick={onDeleteItem} color={red} variant="outlined">
-            Remove
-          </Button>
-        </>
+            <Button
+              style={{ marginRight: 12 }}
+              onClick={() => updateData(listData)}
+              variant="contained">
+              Submit
+            </Button>
+          </Grid>
+          <Grid item md={1}>
+            <Button
+              onClick={onDeleteItem}
+              color={'warning'}
+              variant="contained">
+              Remove
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Modal>
   )

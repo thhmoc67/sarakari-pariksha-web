@@ -1,8 +1,10 @@
+import { AddLink } from "@mui/icons-material";
 import { Card, Grid } from "@mui/material";
 import React, { Component } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import AddData from "./AddData";
 import AddDocument from "./AddDocument";
+import AddLinks from "./AddLinks";
 import AddList from "./AddList";
 import CustomTable from "./CustomTable";
 
@@ -164,6 +166,20 @@ const RenderElement = ({ index, entryItem, onDeleteItem, updateFormCustomData, u
     return (<Grid item md={12}>
       <Card style={{ padding: 12, marginBottom: 12 }}>
         <AddDocument
+          editableLabel
+          data={entryItem.data}
+          onDeleteItem={() => onDeleteItem(index)}
+          title={entryItem.label}
+          updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
+          updateForm={(data) => updateFormCustomData(data, index)}
+        />
+      </Card>
+    </Grid>
+    )
+  } else if (entryItem.type === 'links') {
+    return (<Grid item md={12}>
+      <Card style={{ padding: 12, marginBottom: 12 }}>
+        <AddLinks
           editableLabel
           data={entryItem.data}
           onDeleteItem={() => onDeleteItem(index)}

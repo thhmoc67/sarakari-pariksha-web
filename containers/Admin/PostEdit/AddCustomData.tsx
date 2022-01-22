@@ -15,6 +15,7 @@ import ViewCompactIcon from '@mui/icons-material/ViewCompact'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import TableViewIcon from '@mui/icons-material/TableView'
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
+import AddLinkIcon from '@mui/icons-material/AddLink'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -104,6 +105,23 @@ const CustomItemModal = ({handleClose, addCustomData}: any) => {
               onClick={() => setType('list')}
             />
             <div>List</div>
+          </Grid>
+          <Grid
+            item
+            md={5}
+            style={{
+              textAlign: 'center',
+            }}>
+            <AddLinkIcon
+              style={{
+                borderRadius: 8,
+                border: type === 'links' ? '2px solid #aaa' : 0,
+                fontSize: 100,
+                color: '#aaa',
+              }}
+              onClick={() => setType('links')}
+            />
+            <div>Links</div>
           </Grid>
           <Grid
             item
