@@ -26,7 +26,8 @@ const AddData = ({
   updateForm,
   editableLabel,
   updateLabelForCustomData,
-}: AddData) => {
+  onDeleteItem,
+}: any) => {
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -68,6 +69,7 @@ const AddData = ({
           data={data}
           title={title}
           updateData={updateData}
+          onDeleteItem={onDeleteItem}
         />
       )}
     </Grid>
@@ -107,7 +109,8 @@ const InputModal = ({
   updateData,
   updateLabelForCustomData,
   editableLabel,
-}: InputModal) => {
+  onDeleteItem,
+}: any) => {
   const [formData, setFormData] = React.useState<[] | Data[]>([])
 
   function addInfo() {
@@ -155,6 +158,8 @@ const InputModal = ({
             {title}
           </Typography>
         )}
+        <br />
+        <br />
 
         {formData?.map((inputItem, index: number) => (
           <Grid container spacing={3} marginBottom={1} key={title + index}>
@@ -204,18 +209,31 @@ const InputModal = ({
             <AddIcon />
           </IconButton>
         </Grid>
-        <>
-          <Button
-            onClick={e => handleClose()}
-            variant={'outlined'}
-            style={{marginRight: 12}}>
-            Cancel
-          </Button>
+        <Grid container spacing={3}>
+          <Grid item md={11}>
+            <Button
+              onClick={e => handleClose()}
+              variant={'outlined'}
+              style={{marginRight: 12}}>
+              Cancel
+            </Button>
 
-          <Button onClick={() => updateData(formData)} variant="contained">
-            Submit
-          </Button>
-        </>
+            <Button
+              style={{marginRight: 12}}
+              onClick={() => updateData(formData)}
+              variant="contained">
+              Submit
+            </Button>
+          </Grid>
+          <Grid item md={1}>
+            <Button
+              onClick={onDeleteItem}
+              color={'warning'}
+              variant="contained">
+              Remove
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Modal>
   )

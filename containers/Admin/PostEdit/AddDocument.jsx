@@ -28,6 +28,7 @@ const style = {
 const AddDocument = ({
   data, title, updateForm, editableLabel,
   updateLabelForCustomData,
+  onDeleteItem
 }) => {
   const [openList, setOpenList] = React.useState(false)
   const handleOpenList = () => setOpenList(true)
@@ -70,6 +71,7 @@ const AddDocument = ({
           data={data}
           title={title}
           updateData={updateData}
+          onDeleteItem={onDeleteItem}
         />
       )}
     </Grid>
@@ -84,9 +86,10 @@ const config = {
   readonly: false, // all options from https://xdsoft.net/jodit/doc/
 }
 
-const DocumentModal = ({ title, data, handleClose, updateData, updateLabelForCustomData,
-  editableLabel, }) => {
-  const [content, setContent] = React.useState(typeof (data) === String ? data : '')
+const DocumentModal = ({
+  title, data, handleClose, updateData, updateLabelForCustomData,
+  editableLabel, onDeleteItem }) => {
+  const [content, setContent] = React.useState(data || '')
   return (
     <Modal
       open={!!open}
@@ -115,22 +118,34 @@ const DocumentModal = ({ title, data, handleClose, updateData, updateLabelForCus
           onBlur={setContent} // preferred to use only this option to update the content for performance reasons
           onChange={newContent => { }}
         />
+        <br />
+        <br />
 
-        <>
+        <Grid container spacing={3}>
+          <Grid item md={11}>
+            <Button
+              onClick={e => handleClose()}
+              variant={'outlined'}
+              style={{ marginRight: 12 }}>
+              Cancel
+            </Button>
 
-          <br />
-          <br />
-          <Button
-            onClick={handleClose}
-            variant="outlined"
-            style={{ marginRight: 12 }}>
-            Cancel
-          </Button>
-
-          <Button onClick={() => updateData(content)} variant="contained">
-            Submit
-          </Button>
-        </>
+            <Button
+              style={{ marginRight: 12 }}
+              onClick={() => updateData(content)}
+              variant="contained">
+              Submit
+            </Button>
+          </Grid>
+          <Grid item md={1}>
+            <Button
+              onClick={onDeleteItem}
+              color={'warning'}
+              variant="contained">
+              Remove
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Modal>
   )

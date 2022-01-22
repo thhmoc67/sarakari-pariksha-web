@@ -15,6 +15,7 @@ const AddList = ({
   updateForm,
   editableLabel,
   updateLabelForCustomData,
+  onDeleteItem,
 }: any) => {
   const [openList, setOpenList] = React.useState(false)
   const handleOpenList = () => setOpenList(true)
@@ -57,6 +58,7 @@ const AddList = ({
           data={data}
           title={title}
           updateData={updateData}
+          onDeleteItem={onDeleteItem}
         />
       )}
     </Grid>
@@ -88,6 +90,7 @@ const ListModal = ({
   updateData,
   updateLabelForCustomData,
   editableLabel,
+  onDeleteItem,
 }: any) => {
   const [listData, setListData] = React.useState<any>([])
 
@@ -129,6 +132,8 @@ const ListModal = ({
             {title}
           </Typography>
         )}
+        <br />
+        <br />
 
         {listData?.map((listItem: any, index: number) => (
           <Grid
@@ -159,18 +164,32 @@ const ListModal = ({
             <PlaylistAddIcon />
           </IconButton>
         </Grid>
-        <>
-          <Button
-            onClick={handleClose}
-            variant="outlined"
-            style={{marginRight: 12}}>
-            Cancel
-          </Button>
 
-          <Button onClick={() => updateData(listData)} variant="contained">
-            Submit
-          </Button>
-        </>
+        <Grid container spacing={3}>
+          <Grid item md={11}>
+            <Button
+              onClick={e => handleClose()}
+              variant={'outlined'}
+              style={{marginRight: 12}}>
+              Cancel
+            </Button>
+
+            <Button
+              style={{marginRight: 12}}
+              onClick={() => updateData(listData)}
+              variant="contained">
+              Submit
+            </Button>
+          </Grid>
+          <Grid item md={1}>
+            <Button
+              onClick={onDeleteItem}
+              color={'warning'}
+              variant="contained">
+              Remove
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Modal>
   )

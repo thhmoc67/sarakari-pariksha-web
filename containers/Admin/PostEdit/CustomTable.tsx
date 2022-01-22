@@ -1,4 +1,12 @@
-import {Box, Button, Grid, IconButton, Input, Modal, Typography} from '@mui/material'
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Input,
+  Modal,
+  Typography,
+} from '@mui/material'
 import React, {useState} from 'react'
 import TableViewIcon from '@mui/icons-material/TableView'
 import CustomTablePreview from '../../../components/CustomTablePreview'
@@ -18,6 +26,7 @@ const CustomTable = ({
   updateForm,
   editableLabel,
   updateLabelForCustomData,
+  onDeleteItem
 }: any) => {
   const [openModal, setOpenModal] = useState(false)
   function handleOpen() {
@@ -43,6 +52,7 @@ const CustomTable = ({
             handleClose={handleClose}
             info={data}
             updateForm={updateForm}
+            onDeleteItem={onDeleteItem}
           />
         )}
       </Grid>
@@ -74,6 +84,7 @@ const TableModal = ({
   updateForm,
   updateLabelForCustomData,
   editableLabel,
+  onDeleteItem,
 }: any) => {
   const [data, setData] = useState(info ? JSON.parse(info) : [])
   const [rowVal, setRow] = useState(0)
@@ -165,6 +176,8 @@ const TableModal = ({
             {title}
           </Typography>
         )}
+        <br />
+        <br />
 
         {!data.length && (
           <Grid item md={12} margin={3}>
@@ -185,7 +198,10 @@ const TableModal = ({
                         if (maxCol < j) maxCol = j
                         return (
                           // eslint-disable-next-line react/jsx-key
-                          <th rowSpan={item.rowSpan} colSpan={item.colSpan}>
+                          <th
+                            style={{position: 'relative'}}
+                            rowSpan={item.rowSpan}
+                            colSpan={item.colSpan}>
                             <ItemDetail
                               colItem={data[0]}
                               item={item}
@@ -198,19 +214,17 @@ const TableModal = ({
                               addRow={addRow}
                               data={data}
                             />
-
-                            {0 === j && (
-                              <span
+                            {data?.length - 1 === 0 && (
+                              <div
                                 onClick={() => addColumn()}
                                 style={{
                                   position: 'absolute',
-                                  left: 50,
-                                  bottom: 85,
+                                  marginTop: 12,
                                   color: 'red',
                                   cursor: 'pointer',
                                 }}>
                                 +
-                              </span>
+                              </div>
                             )}
                           </th>
                         )
@@ -231,7 +245,10 @@ const TableModal = ({
                           return (
                             // eslint-disable-next-line react/jsx-key
                             <>
-                              <td rowSpan={item.rowSpan} colSpan={item.colSpan}>
+                              <td
+                                // style={{position: 'relative'}}
+                                rowSpan={item.rowSpan}
+                                colSpan={item.colSpan}>
                                 <ItemDetail
                                   colItem={colItem}
                                   item={item}
@@ -244,6 +261,19 @@ const TableModal = ({
                                   addRow={addRow}
                                   data={data}
                                 />
+
+                                {data?.length - 1 === i && (
+                                  <div
+                                    onClick={() => addColumn()}
+                                    style={{
+                                      position: 'absolute',
+                                      marginTop: 12,
+                                      color: 'red',
+                                      cursor: 'pointer',
+                                    }}>
+                                    +
+                                  </div>
+                                )}
                               </td>
                             </>
                           )
@@ -258,18 +288,32 @@ const TableModal = ({
         </Grid>
         <br />
         <br />
-        <>
-          <Button
-            onClick={closeModal}
-            variant={'outlined'}
-            style={{marginRight: 12}}>
-            Cancel
-          </Button>
 
-          <Button onClick={() => updateData()} variant="contained">
-            Submit
-          </Button>
-        </>
+        <Grid container spacing={3}>
+          <Grid item md={11}>
+            <Button
+              onClick={e => handleClose()}
+              variant={'outlined'}
+              style={{marginRight: 12}}>
+              Cancel
+            </Button>
+
+            <Button
+              style={{marginRight: 12}}
+              onClick={() => updateData()}
+              variant="contained">
+              Submit
+            </Button>
+          </Grid>
+          <Grid item md={1}>
+            <Button
+              onClick={onDeleteItem}
+              color={'warning'}
+              variant="contained">
+              Remove
+            </Button>
+          </Grid>
+        </Grid>
       </Box>
     </Modal>
   )

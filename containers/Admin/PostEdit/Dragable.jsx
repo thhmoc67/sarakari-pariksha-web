@@ -7,11 +7,6 @@ import AddList from "./AddList";
 import CustomTable from "./CustomTable";
 
 // fake data generator
-const getItems = count =>
-  Array.from({ length: count }, (v, k) => k).map(k => ({
-    id: `item-${k}`,
-    content: `item ${k}`
-  }));
 
 // a little function to help us with reordering the result
 
@@ -33,6 +28,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const getListStyle = isDraggingOver => ({
   background: isDraggingOver ? "#eee" : "#fff",
+  height: '100%',
   padding: grid,
   width: '100%'
 });
@@ -41,7 +37,6 @@ class DraggableComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: getItems(10)
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
@@ -104,6 +99,7 @@ class DraggableComponent extends Component {
                       {/* {item.label} */}
                       <RenderElement
                         index={index}
+                        onDeleteItem={this.props.onDeleteItem}
                         entryItem={item}
                         updateLabelForCustomData={this.props.updateLabelForCustomData}
                         updateFormCustomData={this.props.updateFormCustomData} />
@@ -120,7 +116,7 @@ class DraggableComponent extends Component {
   }
 }
 
-const RenderElement = ({ index, entryItem, updateFormCustomData, updateLabelForCustomData }) => {
+const RenderElement = ({ index, entryItem, onDeleteItem, updateFormCustomData, updateLabelForCustomData }) => {
   if (entryItem.type === 'list') {
     return (
       <Grid item md={12}>
@@ -128,6 +124,7 @@ const RenderElement = ({ index, entryItem, updateFormCustomData, updateLabelForC
           <AddList
             editableLabel
             data={entryItem.data}
+            onDeleteItem={() => onDeleteItem(index)}
             title={entryItem.label}
             updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
             updateForm={(data) => updateFormCustomData(data, index)}
@@ -141,6 +138,7 @@ const RenderElement = ({ index, entryItem, updateFormCustomData, updateLabelForC
         <AddData
           editableLabel
           data={entryItem.data}
+          onDeleteItem={() => onDeleteItem(index)}
           title={entryItem.label}
           updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
           updateForm={(data) => updateFormCustomData(data, index)}
@@ -154,6 +152,7 @@ const RenderElement = ({ index, entryItem, updateFormCustomData, updateLabelForC
         <CustomTable
           editableLabel
           data={entryItem.data}
+          onDeleteItem={() => onDeleteItem(index)}
           title={entryItem.label}
           updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
           updateForm={(data) => updateFormCustomData(data, index)}
@@ -167,6 +166,7 @@ const RenderElement = ({ index, entryItem, updateFormCustomData, updateLabelForC
         <AddDocument
           editableLabel
           data={entryItem.data}
+          onDeleteItem={() => onDeleteItem(index)}
           title={entryItem.label}
           updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
           updateForm={(data) => updateFormCustomData(data, index)}

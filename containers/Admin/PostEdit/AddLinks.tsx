@@ -21,6 +21,7 @@ const AddLinks = ({
   updateForm,
   editableLabel,
   updateLabelForCustomData,
+  onDeleteItem,
 }: any) => {
   const [openList, setOpenList] = React.useState(false)
   const handleOpenList = () => setOpenList(true)
@@ -44,31 +45,6 @@ const AddLinks = ({
             {title}
           </Button>
         </div>
-        {/* {data?.map((item: any, index: number) => (
-          <Grid container key={title + ' card' + index}>
-            <Grid md={6} padding={1}>
-              <Typography>{item.label}</Typography>
-            </Grid>
-            <Grid md={6} padding={1}>
-              {item?.links?.map((link: Link, index: number) => (
-                <React.Fragment key={'urlimplink' + index}>
-                  <u>
-                    <a
-                      style={{color: 'blue'}}
-                      href={link.url}
-                      target="_blank"
-                      rel="noreferrer">
-                      {link.label}{' '}
-                    </a>
-                  </u>
-                  {item.links.length - 1 !== index && (
-                    <>&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;</>
-                  )}
-                </React.Fragment>
-              ))}
-            </Grid>
-          </Grid>
-        ))} */}
       </Grid>
 
       {openList && (
@@ -80,6 +56,7 @@ const AddLinks = ({
           data={data}
           title={title}
           updateData={updateData}
+          onDeleteItem={onDeleteItem}
         />
       )}
     </Grid>
@@ -119,7 +96,8 @@ const ListModal = ({
   updateData,
   updateLabelForCustomData,
   editableLabel,
-}: ListModal) => {
+  onDeleteItem,
+}: any) => {
   const [listData, setListData] = React.useState<any>([])
   const [count, setCount] = React.useState(0)
 
@@ -194,6 +172,9 @@ const ListModal = ({
             {title}
           </Typography>
         )}
+        <br />
+        <br />
+
         <Grid container spacing={1}>
           {listData?.map((listItem: any, index: number) => (
             <Grid item md={6} key={title + ' list item' + index} padding={1}>
@@ -288,8 +269,15 @@ const ListModal = ({
             Cancel
           </Button>
 
-          <Button onClick={() => updateData(listData)} variant="contained">
+          <Button
+            onClick={() => updateData(listData)}
+            variant="contained"
+            style={{marginRight: 12}}>
             Submit
+          </Button>
+
+          <Button onClick={onDeleteItem} color={red} variant="outlined">
+            Remove
           </Button>
         </>
       </Box>

@@ -37,13 +37,13 @@ const PostEdit = () => {
   }
 
   function updateFormCustomData(data, index) {
+    console.log(data, index)
     setForm({
       ...form,
       customData: [
         ...form.customData.slice(0, index),
         {
-          type: form.customData[index].type,
-          label: form.customData[index].label,
+          ...form.customData[index],
           data,
         },
         ...form.customData.slice(index + 1, form.customData.length),
@@ -51,15 +51,23 @@ const PostEdit = () => {
     })
   }
 
+  function onDeleteItem(index) {
+    setForm({
+      ...form,
+      customData: [
+        ...form.customData.slice(0, index),
+        ...form.customData.slice(index + 1, form.customData.length),
+      ],
+    })
+  }
+
   function updateLabelForCustomData(label, index) {
-    console.log(label, index)
     setForm({
       ...form,
       customData: [
         ...form.customData.slice(0, index),
         {
-          type: form.customData[index].type,
-          data: form.customData[index].data,
+          ...form.customData[index],
           label,
         },
         ...form.customData.slice(index + 1, form.customData.length),
@@ -72,7 +80,7 @@ const PostEdit = () => {
       ...form,
       customData: [
         ...form.customData,
-        { type, label, data: type === 'customtable' ? null : [], id: new Date().getTime() },
+        { type, label, data: type === 'customtable' || type === 'document' ? null : [], id: new Date().getTime() },
       ],
     })
   }
@@ -176,6 +184,7 @@ const PostEdit = () => {
                     <DraggableComponent
                       form={form}
                       setForm={setForm}
+                      onDeleteItem={onDeleteItem}
                       updateFormCustomData={updateFormCustomData}
                       updateLabelForCustomData={updateLabelForCustomData} />
                   </Grid>
