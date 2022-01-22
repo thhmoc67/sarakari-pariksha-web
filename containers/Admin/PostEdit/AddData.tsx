@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Card, Grid, IconButton, TextField} from '@mui/material'
+import {Button, Card, Grid, IconButton, Input, TextField} from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -20,7 +20,13 @@ type Data = {
   note: string
 }
 
-const AddData = ({data, title, updateForm}: AddData) => {
+const AddData = ({
+  data,
+  title,
+  updateForm,
+  editableLabel,
+  updateLabelForCustomData,
+}: AddData) => {
   const [open, setOpen] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -55,6 +61,8 @@ const AddData = ({data, title, updateForm}: AddData) => {
       {/* modal */}
       {open && (
         <InputModal
+          editableLabel={editableLabel}
+          updateLabelForCustomData={updateLabelForCustomData}
           open={open}
           handleClose={handleClose}
           data={data}
@@ -97,6 +105,8 @@ const InputModal = ({
   data,
   title,
   updateData,
+  updateLabelForCustomData,
+  editableLabel,
 }: InputModal) => {
   const [formData, setFormData] = React.useState<[] | Data[]>([])
 
@@ -134,9 +144,17 @@ const InputModal = ({
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
       <Box sx={style}>
-        <Typography variant="h5" component="h1" marginBottom={2}>
-          {title}
-        </Typography>
+        {editableLabel ? (
+          <Input
+            fullWidth
+            value={title}
+            onChange={e => updateLabelForCustomData(e.target.value)}
+          />
+        ) : (
+          <Typography variant="h5" component="h1" marginBottom={2}>
+            {title}
+          </Typography>
+        )}
 
         {formData?.map((inputItem, index: number) => (
           <Grid container spacing={3} marginBottom={1} key={title + index}>

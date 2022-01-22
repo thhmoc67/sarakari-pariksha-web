@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Card, Grid, IconButton, TextField} from '@mui/material'
+import {Button, Card, Grid, IconButton, Input, TextField} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -9,7 +9,13 @@ import EditIcon from '@mui/icons-material/Edit'
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted'
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
 
-const AddList = ({data, title, updateForm}: any) => {
+const AddList = ({
+  data,
+  title,
+  updateForm,
+  editableLabel,
+  updateLabelForCustomData,
+}: any) => {
   const [openList, setOpenList] = React.useState(false)
   const handleOpenList = () => setOpenList(true)
   const handleCloseList = () => setOpenList(false)
@@ -44,6 +50,8 @@ const AddList = ({data, title, updateForm}: any) => {
 
       {openList && (
         <ListModal
+          editableLabel={editableLabel}
+          updateLabelForCustomData={updateLabelForCustomData}
           open={openList}
           handleClose={handleCloseList}
           data={data}
@@ -72,7 +80,15 @@ const style = {
 
 // -----------------------------------------------------component list-------------------------------------------------------------------------------------------------
 
-const ListModal = ({open, handleClose, data, title, updateData}: any) => {
+const ListModal = ({
+  open,
+  handleClose,
+  data,
+  title,
+  updateData,
+  updateLabelForCustomData,
+  editableLabel,
+}: any) => {
   const [listData, setListData] = React.useState<any>([])
 
   function addInfo() {
@@ -102,9 +118,17 @@ const ListModal = ({open, handleClose, data, title, updateData}: any) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
       <Box sx={style}>
-        <Typography variant="h5" component="h1" marginBottom={2}>
-          {title}
-        </Typography>
+        {editableLabel ? (
+          <Input
+            fullWidth
+            value={title}
+            onChange={e => updateLabelForCustomData(e.target.value)}
+          />
+        ) : (
+          <Typography variant="h5" component="h1" marginBottom={2}>
+            {title}
+          </Typography>
+        )}
 
         {listData?.map((listItem: any, index: number) => (
           <Grid

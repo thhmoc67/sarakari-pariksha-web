@@ -1,4 +1,4 @@
-import {Box, Button, Grid, IconButton, Modal, Typography} from '@mui/material'
+import {Box, Button, Grid, IconButton, Input, Modal, Typography} from '@mui/material'
 import React, {useState} from 'react'
 import TableViewIcon from '@mui/icons-material/TableView'
 import CustomTablePreview from '../../../components/CustomTablePreview'
@@ -12,7 +12,13 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import DeleteIcon from '@mui/icons-material/Delete'
 import {AnyNaptrRecord} from 'node:dns'
 
-const CustomTable = ({title, data, updateForm}: any) => {
+const CustomTable = ({
+  title,
+  data,
+  updateForm,
+  editableLabel,
+  updateLabelForCustomData,
+}: any) => {
   const [openModal, setOpenModal] = useState(false)
   function handleOpen() {
     setOpenModal(true)
@@ -30,6 +36,8 @@ const CustomTable = ({title, data, updateForm}: any) => {
         {/* <CustomTablePreview /> */}
         {openModal && (
           <TableModal
+            editableLabel={editableLabel}
+            updateLabelForCustomData={updateLabelForCustomData}
             title={title}
             open={openModal}
             handleClose={handleClose}
@@ -64,6 +72,8 @@ const TableModal = ({
   handleClose,
   info,
   updateForm,
+  updateLabelForCustomData,
+  editableLabel,
 }: any) => {
   const [data, setData] = useState(info ? JSON.parse(info) : [])
   const [rowVal, setRow] = useState(0)
@@ -144,9 +154,17 @@ const TableModal = ({
   return (
     <Modal open={open} onClose={closeModal}>
       <Box sx={style}>
-        <Typography variant="h5" component="h1" marginBottom={2}>
-          {title}
-        </Typography>
+        {editableLabel ? (
+          <Input
+            fullWidth
+            value={title}
+            onChange={e => updateLabelForCustomData(e.target.value)}
+          />
+        ) : (
+          <Typography variant="h5" component="h1" marginBottom={2}>
+            {title}
+          </Typography>
+        )}
 
         {!data.length && (
           <Grid item md={12} margin={3}>

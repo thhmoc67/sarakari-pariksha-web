@@ -1,6 +1,6 @@
 import React from 'react'
 import dynamic from 'next/dynamic'
-import { Box, Button, Grid, Modal } from '@mui/material'
+import { Box, Button, Grid, Input, Modal, Typography } from '@mui/material'
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 
 const importJodit = () => import('jodit-react')
@@ -25,7 +25,10 @@ const style = {
 }
 
 
-const AddDocument = ({ data, title, updateForm }) => {
+const AddDocument = ({
+  data, title, updateForm, editableLabel,
+  updateLabelForCustomData,
+}) => {
   const [openList, setOpenList] = React.useState(false)
   const handleOpenList = () => setOpenList(true)
   const handleCloseList = () => setOpenList(false)
@@ -60,6 +63,8 @@ const AddDocument = ({ data, title, updateForm }) => {
 
       {openList && (
         <DocumentModal
+          editableLabel={editableLabel}
+          updateLabelForCustomData={updateLabelForCustomData}
           open={openList}
           handleClose={handleCloseList}
           data={data}
@@ -79,8 +84,9 @@ const config = {
   readonly: false, // all options from https://xdsoft.net/jodit/doc/
 }
 
-const DocumentModal = ({ data, handleClose, updateData }) => {
-  const [content, setContent] = React.useState(data || '')
+const DocumentModal = ({ title, data, handleClose, updateData, updateLabelForCustomData,
+  editableLabel, }) => {
+  const [content, setContent] = React.useState(typeof (data) === String ? data : '')
   return (
     <Modal
       open={!!open}
@@ -88,9 +94,22 @@ const DocumentModal = ({ data, handleClose, updateData }) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
       <Box sx={style}>
+        {editableLabel ? (
+          <Input
+            fullWidth
+            value={title}
+            onChange={e => updateLabelForCustomData(e.target.value)}
+          />
+        ) : (
+          <Typography variant="h5" component="h1" marginBottom={2}>
+            {title}
+          </Typography>
+        )}
+        <br />
+        <br />
         <JoditEditor
           // ref={editor}
-          value={content}
+          value={content || ''}
           config={config}
           tabIndex={1} // tabIndex of textarea
           onBlur={setContent} // preferred to use only this option to update the content for performance reasons
@@ -98,6 +117,7 @@ const DocumentModal = ({ data, handleClose, updateData }) => {
         />
 
         <>
+
           <br />
           <br />
           <Button

@@ -102,7 +102,11 @@ class DraggableComponent extends Component {
                       )}
                     >
                       {/* {item.label} */}
-                      <RenderElement entryItem={item} updateFormCustomData={this.props.updateFormCustomData} />
+                      <RenderElement
+                        index={index}
+                        entryItem={item}
+                        updateLabelForCustomData={this.props.updateLabelForCustomData}
+                        updateFormCustomData={this.props.updateFormCustomData} />
                     </div>
                   )}
                 </Draggable>
@@ -116,17 +120,17 @@ class DraggableComponent extends Component {
   }
 }
 
-const RenderElement = ({ entryItem, updateFormCustomData }) => {
+const RenderElement = ({ index, entryItem, updateFormCustomData, updateLabelForCustomData }) => {
   if (entryItem.type === 'list') {
     return (
       <Grid item md={12}>
         <Card style={{ padding: 12, marginBottom: 12 }}>
           <AddList
+            editableLabel
             data={entryItem.data}
             title={entryItem.label}
-            updateForm={(data) =>
-              updateFormCustomData(data, index)
-            }
+            updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
+            updateForm={(data) => updateFormCustomData(data, index)}
           />
         </Card>
       </Grid>
@@ -135,11 +139,11 @@ const RenderElement = ({ entryItem, updateFormCustomData }) => {
     return (<Grid item md={12}>
       <Card style={{ padding: 12, marginBottom: 12 }}>
         <AddData
+          editableLabel
           data={entryItem.data}
           title={entryItem.label}
-          updateForm={(data) =>
-            updateFormCustomData(data, index)
-          }
+          updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
+          updateForm={(data) => updateFormCustomData(data, index)}
         />
       </Card>
     </Grid>
@@ -148,11 +152,11 @@ const RenderElement = ({ entryItem, updateFormCustomData }) => {
     return (<Grid item md={12}>
       <Card style={{ padding: 12, marginBottom: 12 }}>
         <CustomTable
+          editableLabel
           data={entryItem.data}
           title={entryItem.label}
-          updateForm={(data) =>
-            updateFormCustomData(data, index)
-          }
+          updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
+          updateForm={(data) => updateFormCustomData(data, index)}
         />
       </Card>
     </Grid>
@@ -161,11 +165,11 @@ const RenderElement = ({ entryItem, updateFormCustomData }) => {
     return (<Grid item md={12}>
       <Card style={{ padding: 12, marginBottom: 12 }}>
         <AddDocument
+          editableLabel
           data={entryItem.data}
           title={entryItem.label}
-          updateForm={(data) =>
-            updateFormCustomData(data, index)
-          }
+          updateLabelForCustomData={(label) => updateLabelForCustomData(label, index)}
+          updateForm={(data) => updateFormCustomData(data, index)}
         />
       </Card>
     </Grid>

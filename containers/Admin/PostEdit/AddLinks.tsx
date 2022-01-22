@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Grid, IconButton, TextField} from '@mui/material'
+import {Button, Grid, IconButton, Input, TextField} from '@mui/material'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Modal from '@mui/material/Modal'
@@ -15,7 +15,13 @@ type AddLinks = {
   updateForm: (data: PostList) => void
 }
 
-const AddLinks = ({data, title, updateForm}: AddLinks) => {
+const AddLinks = ({
+  data,
+  title,
+  updateForm,
+  editableLabel,
+  updateLabelForCustomData,
+}: any) => {
   const [openList, setOpenList] = React.useState(false)
   const handleOpenList = () => setOpenList(true)
   const handleCloseList = () => setOpenList(false)
@@ -67,6 +73,8 @@ const AddLinks = ({data, title, updateForm}: AddLinks) => {
 
       {openList && (
         <ListModal
+          editableLabel={editableLabel}
+          updateLabelForCustomData={updateLabelForCustomData}
           open={openList}
           handleClose={handleCloseList}
           data={data}
@@ -103,7 +111,15 @@ type ListModal = {
   updateData: (data: PostList) => void
 }
 
-const ListModal = ({open, handleClose, data, title, updateData}: ListModal) => {
+const ListModal = ({
+  open,
+  handleClose,
+  data,
+  title,
+  updateData,
+  updateLabelForCustomData,
+  editableLabel,
+}: ListModal) => {
   const [listData, setListData] = React.useState<any>([])
   const [count, setCount] = React.useState(0)
 
@@ -167,9 +183,17 @@ const ListModal = ({open, handleClose, data, title, updateData}: ListModal) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
-        <Typography variant="h5" component="h1" marginBottom={2}>
-          {title}
-        </Typography>
+        {editableLabel ? (
+          <Input
+            fullWidth
+            value={title}
+            onChange={e => updateLabelForCustomData(e.target.value)}
+          />
+        ) : (
+          <Typography variant="h5" component="h1" marginBottom={2}>
+            {title}
+          </Typography>
+        )}
         <Grid container spacing={1}>
           {listData?.map((listItem: any, index: number) => (
             <Grid item md={6} key={title + ' list item' + index} padding={1}>
