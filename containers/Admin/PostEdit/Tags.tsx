@@ -85,9 +85,12 @@ const TagModal = ({form, handleClose, open, updateForm}: any) => {
   function handleSave() {
     if (!validateDates()) {
       setTimeout(() => {
+        updateForm(tags, 'tags')
+      }, 130)
+      setTimeout(() => {
+        console.log(tagDates)
         updateForm(tagDates, 'tagDates')
-      }, 10)
-      updateForm(tags, 'tags')
+      }, 50)
       handleClose()
     } else {
       setOpenSnackbar(true)

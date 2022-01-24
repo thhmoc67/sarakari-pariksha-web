@@ -39,6 +39,8 @@ export default function PostTable({rows}: any) {
           <TableRow>
             <StyledTableCell>ID</StyledTableCell>
             <StyledTableCell align="left">Post Name</StyledTableCell>
+            <StyledTableCell align="left">Created Date</StyledTableCell>
+            <StyledTableCell align="left">Tags</StyledTableCell>
             <StyledTableCell align="right">Actions</StyledTableCell>
           </TableRow>
         </TableHead>
@@ -47,8 +49,14 @@ export default function PostTable({rows}: any) {
             <StyledTableRow key={'posttable' + row.id}>
               <StyledTableCell align="left">{row.id}</StyledTableCell>
               <StyledTableCell align="left">{row.post_name}</StyledTableCell>
+              <StyledTableCell align="left">
+                {new Date(row.created_at.seconds * 1000).toLocaleDateString()}
+              </StyledTableCell>
+              <StyledTableCell align="left">
+                {row.tags ? row.tags.join(', ') : ''}
+              </StyledTableCell>
               <StyledTableCell align="right">
-                <Link href={'/admin/post/' + row.id}>
+                <Link href={'/admin/post/' + row.id} passHref>
                   <IconButton color="primary" size="large">
                     <EditIcon />
                   </IconButton>
