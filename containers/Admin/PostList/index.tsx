@@ -29,7 +29,7 @@ const PostList: NextPage = () => {
       list.push({...doc.data(), id: doc.id})
     })
 
-    setPostsList(list)
+    setPostsList(list.sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds))
   }
 
   React.useEffect(() => {
