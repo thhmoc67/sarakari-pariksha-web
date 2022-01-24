@@ -52,6 +52,8 @@ const TagModal = ({form, handleClose, open, updateForm}: any) => {
   const [tagDates, setTagDates] = React.useState<any>(form.tagDates || {})
   const [openSnackbar, setOpenSnackbar] = React.useState(false)
 
+  console.log(form, form.tagDates)
+
   function handleDelete(tag: any) {
     const index = tags.indexOf(tag)
     const list = tags
@@ -84,13 +86,8 @@ const TagModal = ({form, handleClose, open, updateForm}: any) => {
 
   function handleSave() {
     if (!validateDates()) {
-      setTimeout(() => {
-        updateForm(tags, 'tags')
-      }, 130)
-      setTimeout(() => {
-        console.log(tagDates)
-        updateForm(tagDates, 'tagDates')
-      }, 50)
+      updateForm(tags, 'tags')
+      updateForm(tagDates, 'tagDates')
       handleClose()
     } else {
       setOpenSnackbar(true)

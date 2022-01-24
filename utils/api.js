@@ -2,6 +2,7 @@ import {initializeApp} from 'firebase/app'
 import {getFirestore} from 'firebase/firestore'
 import {firebaseConfig} from '../config/firebase'
 import {collection, query, where, getDocs} from 'firebase/firestore'
+import {sortingTags} from '../pages'
 
 export async function fetchPostResults(tag) {
   const firebaseApp = initializeApp(firebaseConfig)
@@ -18,7 +19,8 @@ export async function fetchPostResults(tag) {
       title: data.post_name,
       isNew: data.isNew,
       created_at: data.created_at,
+      tagDates: data.tagDates
     })
   })
-  return list.sort((a, b) => b.created_at.seconds - a.created_at.seconds)
+  return list.sort((a, b) => sortingTags(a.tagDates[tag], b.tagDates[tag]))
 }

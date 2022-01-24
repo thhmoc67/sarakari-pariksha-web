@@ -6,7 +6,6 @@ import {initializeApp} from 'firebase/app'
 import {getDoc, doc, getFirestore} from 'firebase/firestore'
 import {firebaseConfig} from '../config/firebase'
 import {collection, getDocs} from 'firebase/firestore'
-import {useEffect, useState} from 'react'
 
 interface Props {
   latestUpdates: any
@@ -73,30 +72,41 @@ App.getInitialProps = async ({req}: any) => {
       notifications,
       latestjobs: list
         .filter((item: any) => item.tags?.includes('latest jobs'))
-        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
+        .sort((a: any, b: any) =>
+          sortingTags(a.tagDates['latest jobs'], b.tagDates['latest jobs']),
+        )
         .slice(0, 9),
       results: list
         .filter((item: any) => item.tags?.includes('results'))
-        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
+        .sort((a: any, b: any) =>
+          sortingTags(a.tagDates['results'], b.tagDates['results']),
+        )
         .slice(0, 9),
       admitcard: list
         .filter((item: any) => item.tags?.includes('admit card'))
-        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
+        .sort((a: any, b: any) =>
+          sortingTags(a.tagDates['admit card'], b.tagDates['admit card']),
+        )
         .slice(0, 9),
       answerkey: list
         .filter((item: any) => item.tags?.includes('answer key'))
-        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
+        .sort((a: any, b: any) =>
+          sortingTags(a.tagDates['answer key'], b.tagDates['answer key']),
+        )
         .slice(0, 9),
       syllabus: list
         .filter((item: any) => item.tags?.includes('syllabus'))
-        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
+        .sort((a: any, b: any) =>
+          sortingTags(a.tagDates['syllabus'], b.tagDates['syllabus']),
+        )
         .slice(0, 9),
       admission: list
         .filter((item: any) => item.tags?.includes('admission'))
-        .sort((a: any, b: any) => b.created_at.seconds - a.created_at.seconds)
+        .sort((a: any, b: any) =>
+          sortingTags(a.tagDates['admission'], b.tagDates['admission']),
+        )
         .slice(0, 9),
     }
-    // setResults(results)
   }
   await getAllResults()
 
@@ -105,6 +115,11 @@ App.getInitialProps = async ({req}: any) => {
     results,
     notifications,
   }
+}
+
+export function sortingTags(a: number, b: number) {
+  console.log(new Date(a).getTime(), new Date(b).getTime())
+  return new Date(b).getTime() - new Date(a).getTime()
 }
 
 export default App

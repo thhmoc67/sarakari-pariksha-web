@@ -33,7 +33,7 @@ const PostEdit = () => {
   const [preview, setPreview] = React.useState(false)
 
   function updateForm(data, attr) {
-    setForm({ ...form, [attr]: data })
+    setForm(form => ({ ...form, [attr]: data }))
   }
 
   function updateFormCustomData(data, index) {
