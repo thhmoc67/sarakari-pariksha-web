@@ -59,3 +59,17 @@
     background-color: rgb(6, 49, 189);
   }
 }
+
+@media (max-width: 500px) {
+  .latest-updates-component {
+    .card {
+      width: 100%;
+      padding: 4px;
+      p {
+        height: 70px;
+        padding: 4px;
+        font-size: 13px;
+      }
+    }
+  }
+}

@@ -118,7 +118,6 @@ App.getInitialProps = async ({req}: any) => {
 }
 
 export function sortingTags(a: number, b: number) {
-  console.log(new Date(a).getTime(), new Date(b).getTime())
   return new Date(b).getTime() - new Date(a).getTime()
 }
 

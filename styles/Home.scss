@@ -21,3 +21,10 @@
     margin-top: 12px;
   }
 }
+
+@media (max-width: 500px) {
+  .PostTitleListCard,
+  h1 {
+    margin: 8px;
+  }
+}

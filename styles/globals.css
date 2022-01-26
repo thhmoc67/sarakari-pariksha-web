@@ -14,3 +14,18 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@media (max-width: 600px) {
+  header {
+    width: 100vw;
+  }
+
+  header > ul {
+    flex-wrap: wrap;
+    width: 100vw !important;
+  }
+  header > ul > li {
+    width: 25% !important;
+    font-size: small;
+  }
+}

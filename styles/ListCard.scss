@@ -27,3 +27,10 @@
     }
   }
 }
+
+@media (max-width: 500px) {
+  .list-card-component {
+    width: 100%;
+    margin: 8px !important;
+  }
+}
